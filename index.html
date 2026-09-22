@@ -1164,10 +1164,6 @@ body:has(button:hover) #cursorRing { width: 60px; height: 60px; opacity: 1; }
       <h2 class="section-title">Instants capturés</h2>
     </div>
     <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
-      <button class="btn-edit-toggle" id="btnEditToggle">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-        Réorganiser les photos
-      </button>
       <a href="#contact" class="btn-ghost">
         Demander l'accès complet
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -1175,11 +1171,6 @@ body:has(button:hover) #cursorRing { width: 60px; height: 60px; opacity: 1; }
         </svg>
       </a>
     </div>
-  </div>
-  <div class="portfolio-edit-bar hidden" id="portfolioEditBar">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="5" r="1"/><circle cx="9" cy="12" r="1"/><circle cx="9" cy="19" r="1"/><circle cx="15" cy="5" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="15" cy="19" r="1"/></svg>
-    Mode édition actif — glisse les photos pour les réorganiser
-    <button class="btn-edit-done" id="btnEditDone">✓ Terminer</button>
   </div>
   <div class="portfolio-grid">
                 <div class="port-item">
@@ -1610,102 +1601,6 @@ function initCounters() {
 
 // INIT
 
-// ── DRAG & DROP PORTFOLIO ──
-(function() {
-  let editMode = false;
-  let dragSrc = null;
-
-  const grid = document.querySelector('.portfolio-grid');
-  const editBar = document.getElementById('portfolioEditBar');
-  const toggleBtn = document.getElementById('btnEditToggle');
-  const doneBtn = document.getElementById('btnEditDone');
-
-  if (!grid || !toggleBtn) return;
-
-  // Add drag handle hints to all items
-  grid.querySelectorAll('.port-item').forEach(item => {
-    const hint = document.createElement('span');
-    hint.className = 'drag-handle-hint';
-    hint.textContent = '⠿ glisser';
-    item.appendChild(hint);
-  });
-
-  function enableDrag() {
-    editMode = true;
-    grid.classList.add('edit-mode');
-    editBar.classList.remove('hidden');
-    toggleBtn.style.display = 'none';
-
-    grid.querySelectorAll('.port-item').forEach(item => {
-      item.setAttribute('draggable', 'true');
-      item.addEventListener('dragstart', onDragStart);
-      item.addEventListener('dragover', onDragOver);
-      item.addEventListener('dragleave', onDragLeave);
-      item.addEventListener('drop', onDrop);
-      item.addEventListener('dragend', onDragEnd);
-    });
-  }
-
-  function disableDrag() {
-    editMode = false;
-    grid.classList.remove('edit-mode');
-    editBar.classList.add('hidden');
-    toggleBtn.style.display = '';
-
-    grid.querySelectorAll('.port-item').forEach(item => {
-      item.setAttribute('draggable', 'false');
-      item.removeEventListener('dragstart', onDragStart);
-      item.removeEventListener('dragover', onDragOver);
-      item.removeEventListener('dragleave', onDragLeave);
-      item.removeEventListener('drop', onDrop);
-      item.removeEventListener('dragend', onDragEnd);
-      item.classList.remove('dragging', 'drag-over');
-    });
-  }
-
-  function onDragStart(e) {
-    dragSrc = this;
-    this.classList.add('dragging');
-    e.dataTransfer.effectAllowed = 'move';
-    e.dataTransfer.setData('text/plain', '');
-  }
-
-  function onDragOver(e) {
-    e.preventDefault();
-    e.dataTransfer.dropEffect = 'move';
-    if (this !== dragSrc) this.classList.add('drag-over');
-    return false;
-  }
-
-  function onDragLeave() {
-    this.classList.remove('drag-over');
-  }
-
-  function onDrop(e) {
-    e.stopPropagation();
-    if (dragSrc && this !== dragSrc) {
-      // Swap the two items
-      const allItems = [...grid.querySelectorAll('.port-item')];
-      const srcIdx = allItems.indexOf(dragSrc);
-      const dstIdx = allItems.indexOf(this);
-      if (srcIdx < dstIdx) {
-        grid.insertBefore(dragSrc, this.nextSibling);
-      } else {
-        grid.insertBefore(dragSrc, this);
-      }
-    }
-    this.classList.remove('drag-over');
-    return false;
-  }
-
-  function onDragEnd() {
-    dragSrc = null;
-    grid.querySelectorAll('.port-item').forEach(i => i.classList.remove('dragging', 'drag-over'));
-  }
-
-  toggleBtn.addEventListener('click', enableDrag);
-  doneBtn.addEventListener('click', disableDrag);
-})();
 
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 if (!reduceMotion) initReveal();
