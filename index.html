@@ -492,19 +492,7 @@ section { padding: 100px clamp(20px,5vw,64px); }
   filter: brightness(0.96) saturate(0.9);
 }
 .port-item:hover img { transform: scale(1.05); filter: brightness(1.02) saturate(1.05); }
-.port-item .port-overlay {
-  position: absolute; inset: 0;
-  background: linear-gradient(to top, rgba(30,27,23,0.5) 0%, transparent 55%);
-  opacity: 0; transition: opacity 0.4s;
-  display: flex; align-items: flex-end; padding: 20px;
-}
-.port-item:hover .port-overlay { opacity: 1; }
-.port-caption {
-  font-size: 0.78rem; color: rgba(250,248,245,0.9);
-  letter-spacing: 0.06em;
-  transform: translateY(6px); transition: transform 0.4s;
-}
-.port-item:hover .port-caption { transform: none; }
+.port-item .port-overlay { display: none; }
 
 .portfolio-grid {
   max-width: 1200px; margin: 0 auto;
@@ -531,20 +519,6 @@ section { padding: 100px clamp(20px,5vw,64px); }
   filter: brightness(0.96) saturate(0.9);
 }
 .port-item:hover img { transform: scale(1.04); filter: brightness(1.02) saturate(1.05); }
-.port-item .port-overlay {
-  position: absolute; inset: 0;
-  background: linear-gradient(to top, rgba(30,27,23,0.5) 0%, transparent 55%);
-  opacity: 0; transition: opacity 0.4s;
-  display: flex; align-items: flex-end; padding: 20px;
-}
-.port-item:hover .port-overlay { opacity: 1; }
-.port-caption {
-  font-size: 0.78rem; color: rgba(250,248,245,0.9);
-  letter-spacing: 0.06em;
-  transform: translateY(6px); transition: transform 0.4s;
-}
-.port-item:hover .port-caption { transform: none; }
-
 @media (max-width: 900px) {
   .portfolio-grid { columns: 2; }
 }
@@ -1072,7 +1046,12 @@ body:has(button:hover) #cursorRing { width: 60px; height: 60px; opacity: 1; }
 
 <!-- ═══ NAV ═══ -->
 <nav id="mainNav">
-  <a href="#" class="nav-logo">Hugo Gillard</a>
+  <a href="#" class="nav-logo">
+    <svg width="44" height="44" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="60" cy="60" r="58" fill="none" stroke="#9b7a42" stroke-width="1.5"/>
+      <text x="60" y="75" font-family="Playfair Display, Georgia, serif" font-size="44" font-weight="400" fill="#c8a96a" text-anchor="middle" letter-spacing="2">HG</text>
+    </svg>
+  </a>
   <ul class="nav-links">
     <li><a href="#apropos">À propos</a></li>
     <li><a href="#portfolio">Portfolio</a></li>
@@ -1305,7 +1284,6 @@ body:has(button:hover) #cursorRing { width: 60px; height: 60px; opacity: 1; }
         <span class="service-include-item">Livraison sous 3 à 5 mois</span>
       </div>
       <div class="service-bottom">
-        <span class="service-price">1 600 €</span>
       </div>
     </div>
     <!-- VIDEO -->
@@ -1319,7 +1297,6 @@ body:has(button:hover) #cursorRing { width: 60px; height: 60px; opacity: 1; }
         <span class="service-include-item">Musique choisie ensemble</span>
       </div>
       <div class="service-bottom">
-        <span class="service-price">1 800 €</span>
         <a href="https://youtu.be/ofZSioZLUv4" target="_blank" rel="noopener" class="service-yt">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
             <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1C24 15.9 24 12 24 12s0-3.9-.5-5.8zM9.7 15.5V8.5l6.3 3.5-6.3 3.5z"/>
@@ -1339,7 +1316,6 @@ body:has(button:hover) #cursorRing { width: 60px; height: 60px; opacity: 1; }
         <span class="service-include-item">Formule la plus complète</span>
       </div>
       <div class="service-bottom">
-        <span class="service-price">2 400 €</span>
         <a href="https://youtu.be/2l7xX6kgNaI" target="_blank" rel="noopener" class="service-yt">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
             <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1C24 15.9 24 12 24 12s0-3.9-.5-5.8zM9.7 15.5V8.5l6.3 3.5-6.3 3.5z"/>
@@ -1509,9 +1485,9 @@ body:has(button:hover) #cursorRing { width: 60px; height: 60px; opacity: 1; }
         <label for="prestation">Prestation souhaitée</label>
         <select id="prestation" name="prestation">
           <option value="">Choisir une prestation...</option>
-          <option value="photo">Reportage Photo — 1 600 €</option>
-          <option value="video">Film de Mariage — 1 800 €</option>
-          <option value="complet">Photo + Vidéo — 2 400 €</option>
+          <option value="photo">Reportage Photo</option>
+          <option value="video">Film de Mariage</option>
+          <option value="complet">Photo + Vidéo</option>
         </select>
       </div>
       <div class="form-group">
