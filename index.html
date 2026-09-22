@@ -1461,8 +1461,7 @@ body:has(button:hover) #cursorRing { width: 60px; height: 60px; opacity: 1; }
         <span class="contact-detail-value">Sous 48 heures</span>
       </div>
     </div>
-    <form class="contact-form reveal reveal-delay-1" name="contact" method="POST" action="https://formspree.io/f/mqpaqwgy">
-      <input type="hidden" name="_next" value="https://hugogillardpro.com/merci.html">
+    <form class="contact-form reveal reveal-delay-1" id="contactForm">
       <p style="display:none"><input name="_gotcha"></p>
       <div class="form-row">
         <div class="form-group">
@@ -1495,8 +1494,13 @@ body:has(button:hover) #cursorRing { width: 60px; height: 60px; opacity: 1; }
         <label for="message">Votre message</label>
         <textarea id="message" name="message" placeholder="Parlez-moi de votre mariage, du lieu, de l'ambiance souhaitée..."></textarea>
       </div>
-      <button type="submit" class="btn-submit">Envoyer le message</button>
+      <button type="submit" class="btn-submit" id="submitBtn">Envoyer le message</button>
     </form>
+    <div id="formMerci" style="display:none; text-align:center; padding: 60px 20px;">
+      <div style="font-size:48px; margin-bottom:20px;">✉️</div>
+      <h3 style="font-family:'Playfair Display',Georgia,serif; font-size:2rem; color:var(--accent); margin-bottom:16px;">Merci pour votre message !</h3>
+      <p style="color:var(--text-muted); font-size:1.05rem; line-height:1.7;">Je reviendrai vers vous dans les plus brefs délais.<br>En attendant, n'hésitez pas à consulter mes réalisations.</p>
+    </div>
   </div>
 </section>
 
@@ -1511,6 +1515,37 @@ body:has(button:hover) #cursorRing { width: 60px; height: 60px; opacity: 1; }
 </footer>
 
 <script>
+// FORMULAIRE CONTACT — envoi Formspree sans redirection
+(function() {
+  const form = document.getElementById('contactForm');
+  const btn = document.getElementById('submitBtn');
+  const merci = document.getElementById('formMerci');
+  if (!form) return;
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    btn.textContent = 'Envoi en cours...';
+    btn.disabled = true;
+    const data = new FormData(form);
+    try {
+      const res = await fetch('https://formspree.io/f/mqpaqwgy', {
+        method: 'POST',
+        body: data,
+        headers: { 'Accept': 'application/json' }
+      });
+      if (res.ok) {
+        form.style.display = 'none';
+        merci.style.display = 'block';
+      } else {
+        btn.textContent = 'Erreur, réessayez';
+        btn.disabled = false;
+      }
+    } catch(err) {
+      btn.textContent = 'Erreur, réessayez';
+      btn.disabled = false;
+    }
+  });
+})();
+
 // NAV MOBILE + SCROLL SHADOW
 function toggleMenu() {
   document.getElementById('navMobile').classList.toggle('open');
