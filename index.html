@@ -1556,6 +1556,14 @@ body:has(button:hover) #cursorRing { width: 60px; height: 60px; opacity: 1; }
       if (res.ok) {
         form.style.display = 'none';
         merci.style.display = 'block';
+        // Google Ads conversion tracking — formulaire de contact
+        if (typeof gtag !== 'undefined') {
+          gtag('event', 'conversion', {
+            'send_to': 'AW-18470690217/VG4cCNaF9oIdEKm7wedE',
+            'value': 1.0,
+            'currency': 'EUR'
+          });
+        }
       } else {
         btn.textContent = 'Erreur, réessayez';
         btn.disabled = false;
