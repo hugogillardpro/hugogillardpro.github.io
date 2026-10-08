@@ -8,7 +8,7 @@ import Photo from '@/components/Photo';
 import Reveal from '@/components/Reveal';
 import WeddingCard from '@/components/WeddingCard';
 import { chapitres, getMariage, getMariages } from '@/lib/content';
-import { dateLongue, lieuTexte } from '@/lib/format';
+import { dateLongue, de, lieuTexte } from '@/lib/format';
 import { img } from '@/lib/images';
 import { site } from '@/lib/site';
 
@@ -24,8 +24,8 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   const { slug } = await params;
   const m = getMariage(slug);
   const lieu = lieuTexte(m);
-  const titre = `Mariage de ${m.couple}${lieu ? ` à ${lieu}` : ''}`;
-  const description = `Le mariage de ${m.couple.replace(' & ', ' et ')}${m.date ? ` le ${dateLongue(m.date)}` : ''}${
+  const titre = `Mariage ${de(m.couple)}${lieu ? ` à ${lieu}` : ''}`;
+  const description = `Le mariage ${de(m.couple.replace(' & ', ' et '))}${m.date ? ` le ${dateLongue(m.date)}` : ''}${
     lieu ? ` à ${lieu}` : ''
   }, photographié${m.film ? ' et filmé' : ''} par Hugo Gillard : ${m.photos.length + 1} photos, dans l'ordre de la journée.`;
   return {
@@ -61,7 +61,7 @@ export default async function PageMariage({ params }: { params: Promise<Params> 
     {
       '@context': 'https://schema.org',
       '@type': 'ImageGallery',
-      name: `Mariage de ${m.couple}`,
+      name: `Mariage ${de(m.couple)}`,
       url,
       author: { '@type': 'Person', name: site.nom, url: `${site.url}/` },
       image: {
@@ -121,7 +121,7 @@ export default async function PageMariage({ params }: { params: Promise<Params> 
               <p className="sur-titre">Le film</p>
               <h2 id="titre-film">Le teaser du mariage</h2>
             </div>
-            <Film id={m.film} titre={`Teaser du mariage de ${m.couple}`} vignette={vignette} sizes="(min-width: 1200px) 1100px, 94vw" />
+            <Film id={m.film} titre={`Teaser du mariage ${de(m.couple)}`} vignette={vignette} sizes="(min-width: 1200px) 1100px, 94vw" />
           </div>
         </section>
       )}

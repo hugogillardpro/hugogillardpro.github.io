@@ -11,7 +11,7 @@ npm run build     # génère le site dans out/
 npm run preview   # sert out/ sur http://localhost:4323 comme GitHub Pages le ferait
 ```
 
-Node 22.12 ou plus récent. Le script `scripts/images.mjs` (lancé automatiquement par `dev` et `build`) crée les variantes WebP de toutes les photos dans `public/img/`, qui n'est pas versionné.
+Node 22.12 ou plus récent. Si le port 3000 est déjà pris (par exemple par un autre projet Next.js), `npm run dev` choisit un autre port : utilisez l'adresse indiquée sur la ligne « Local: » du terminal. Le script `scripts/images.mjs` (lancé automatiquement par `dev` et `build`) crée les variantes WebP de toutes les photos dans `public/img/`, qui n'est pas versionné.
 
 ## Ajouter un mariage
 

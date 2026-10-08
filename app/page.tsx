@@ -9,6 +9,7 @@ import Photo from '@/components/Photo';
 import Reveal from '@/components/Reveal';
 import WeddingCard from '@/components/WeddingCard';
 import { getMariages } from '@/lib/content';
+import { de } from '@/lib/format';
 import { img } from '@/lib/images';
 import { accueil, films, prestations, site } from '@/lib/site';
 
@@ -55,7 +56,7 @@ export default function Accueil() {
         <HeroVideo
           src={accueil.video.src}
           affiche={img(accueil.video.affiche)}
-          alt={`Extrait du film du mariage de ${accueil.video.couple}`}
+          alt={`Extrait du film du mariage ${de(accueil.video.couple)}`}
         />
         <div className="conteneur hero__contenu">
           <h1 className="hero__titre">
@@ -157,7 +158,7 @@ export default function Accueil() {
           <div className="films">
             {films.map((f, i) => (
               <Reveal key={f.id} className="film" delay={(i % 2) as 0 | 1}>
-                <Film id={f.id} titre={`Teaser du mariage de ${f.couple}`} vignette={vignettes.get(f.id)!} />
+                <Film id={f.id} titre={`Teaser du mariage ${de(f.couple)}`} vignette={vignettes.get(f.id)!} />
                 <p className="film__titre">
                   {f.mariage ? (
                     <Link href={`/mariages/${f.mariage}/`} className="lien-discret">
