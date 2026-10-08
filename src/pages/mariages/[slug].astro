@@ -1,0 +1,285 @@
+---
+import { getCollection } from 'astro:content';
+import { Image, getImage } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Film from '../../components/Film.astro';
+import CarteMariage from '../../components/CarteMariage.astro';
+import { site } from '../../data/site';
+import { dateLongue, dateMois, lieuTexte, trierMariages } from '../../data/format';
+
+export async function getStaticPaths() {
+  const mariages = trierMariages(await getCollection('mariages'));
+  return mariages.map((m, i) => ({
+    params: { slug: m.data.slug },
+    props: { mariage: m, autres: mariages.filter((_, j) => j !== i).slice(0, 3) },
+  }));
+}
+
+interface Props {
+  mariage: CollectionEntry<'mariages'>;
+  autres: CollectionEntry<'mariages'>[];
+}
+
+const { mariage, autres } = Astro.props;
+const d = mariage.data;
+const lieu = lieuTexte(d);
+const url = `/mariages/${d.slug}/`;
+
+// Les photos sont regroupées par moment de la journée, dans l'ordre du reportage.
+type Photo = (typeof d.photos)[number];
+const chapitres: { titre: string; photos: Photo[] }[] = [];
+for (const p of d.photos) {
+  const dernier = chapitres.at(-1);
+  if (dernier && dernier.titre === p.chapitre) dernier.photos.push(p);
+  else chapitres.push({ titre: p.chapitre, photos: [p] });
+}
+
+// Mise en page : une horizontale prend toute la largeur, deux verticales se suivent côte à côte.
+function rangees(photos: Photo[]) {
+  const out: { type: 'large' | 'paire' | 'seule'; photos: Photo[] }[] = [];
+  for (let i = 0; i < photos.length; i++) {
+    const p = photos[i];
+    const horizontale = p.src.width >= p.src.height;
+    const suivante = photos[i + 1];
+    if (horizontale) out.push({ type: 'large', photos: [p] });
+    else if (suivante && suivante.src.width < suivante.src.height) {
+      out.push({ type: 'paire', photos: [p, suivante] });
+      i++;
+    } else out.push({ type: 'seule', photos: [p] });
+  }
+  return out;
+}
+
+const og = await getImage({ src: d.hero, width: 1200, format: 'jpg', quality: 80 });
+const titre = `Mariage de ${d.couple}${lieu ? ` à ${lieu}` : ''} | Hugo Gillard`;
+const description = `Le mariage de ${d.couple.replace(' & ', ' et ')}${d.date ? ` le ${dateLongue(d.date)}` : ''}${
+  lieu ? ` à ${lieu}` : ''
+}, photographié${d.film ? ' et filmé' : ''} par Hugo Gillard : une sélection de ${d.photos.length + 1} photos, dans l'ordre de la journée.`;
+
+const jsonld = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Accueil', item: `${site.url}/` },
+      { '@type': 'ListItem', position: 2, name: 'Mariages', item: `${site.url}/mariages/` },
+      { '@type': 'ListItem', position: 3, name: d.couple, item: `${site.url}${url}` },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ImageGallery',
+    name: `Mariage de ${d.couple}`,
+    url: `${site.url}${url}`,
+    author: { '@type': 'Person', name: site.nom, url: `${site.url}/` },
+    image: {
+      '@type': 'ImageObject',
+      contentUrl: new URL(og.src, site.url).href,
+      creator: { '@type': 'Person', name: site.nom },
+      creditText: site.nom,
+      copyrightNotice: `© ${site.nom}`,
+    },
+  },
+];
+---
+
+<Base title={titre} description={description} image={og.src} jsonld={jsonld}>
+  <article>
+    <div class="conteneur">
+      <nav class="ariane legende" aria-label="Fil d'Ariane">
+        <a href="/">Accueil</a>{' '}<span aria-hidden="true">›</span>{' '}<a href="/mariages/">Mariages</a>{' '}<span aria-hidden="true">›</span>{' '}<span aria-current="page">{d.couple}</span>
+      </nav>
+    </div>
+
+    <figure class="hero">
+      <Image
+        src={d.hero}
+        alt={d.heroAlt}
+        widths={[800, 1200, 1600]}
+        sizes="100vw"
+        format="webp"
+        quality={80}
+        loading="eager"
+        fetchpriority="high"
+        style={`view-transition-name: photo-${d.slug}`}
+      />
+    </figure>
+
+    <header class="conteneur tete">
+      <h1>{d.couple}</h1>
+      <p class="fiche">
+        {d.date ? `Mariage du ${dateLongue(d.date)}` : 'Mariage'}{lieu && <>, {lieu}</>}. {d.film ? 'Photo et film.' : 'Photo.'}
+      </p>
+      <p class="prose">{d.resume}</p>
+    </header>
+
+    {
+      chapitres.map((c) => (
+        <section class="chapitre" aria-label={c.titre}>
+          <h2 class="conteneur">{c.titre}</h2>
+          <div class="conteneur rangees">
+            {rangees(c.photos).map((r) => (
+              <div class={`rangee ${r.type}`}>
+                {r.photos.map((p) => (
+                  <figure>
+                    <Image
+                      src={p.src}
+                      alt={p.alt}
+                      widths={r.type === 'large' ? [800, 1200, 1600] : [500, 800, 1100]}
+                      sizes={
+                        r.type === 'large'
+                          ? '(min-width: 1440px) 1330px, 94vw'
+                          : r.type === 'paire'
+                            ? '(min-width: 760px) 47vw, 94vw'
+                            : '(min-width: 760px) 60vw, 94vw'
+                      }
+                      format="webp"
+                      quality={80}
+                      loading="lazy"
+                    />
+                  </figure>
+                ))}
+              </div>
+            ))}
+          </div>
+        </section>
+      ))
+    }
+
+    {
+      d.film && (
+        <section class="conteneur bloc-film" aria-labelledby="titre-film">
+          <h2 id="titre-film">Le film</h2>
+          <Film id={d.film} titre={`Teaser du mariage de ${d.couple}`} />
+        </section>
+      )
+    }
+
+    {
+      d.temoignage?.verifie && (
+        <section class="conteneur temoignage" aria-labelledby="titre-mot">
+          <h2 id="titre-mot">Le mot des mariés</h2>
+          <blockquote class="prose">
+            <p>« {d.temoignage.texte} »</p>
+          </blockquote>
+          {d.temoignage.source && <p class="legende">{d.temoignage.source}</p>}
+        </section>
+      )
+    }
+
+    <section class="conteneur appel">
+      <h2>Vous vous mariez{d.commune ? ` à ${d.commune} ou pas loin` : ''} ?</h2>
+      <p class="prose">Envoyez-moi votre date et le lieu, je vous réponds {site.delaiReponse}.</p>
+      <p><a class="bouton" href="/#contact">Vérifier ma date</a></p>
+    </section>
+  </article>
+
+  {
+    autres.length > 0 && (
+      <section class="section">
+        <div class="conteneur">
+          <div class="section-tete">
+            <h2>D'autres mariages</h2>
+            <a href="/mariages/">Tous les mariages</a>
+          </div>
+          <div class="cartes">
+            {autres.map((m) => (
+              <CarteMariage mariage={m} />
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+</Base>
+
+<style>
+  .ariane {
+    padding-block: 18px;
+  }
+  .ariane a {
+    color: var(--encre-2);
+  }
+  .hero {
+    margin: 0;
+  }
+  .hero :global(img) {
+    width: 100%;
+    max-height: 88vh;
+    object-fit: cover;
+  }
+  .tete {
+    display: grid;
+    gap: 14px;
+    padding-block: 32px 16px;
+  }
+  .fiche {
+    color: var(--encre-2);
+  }
+  .chapitre {
+    padding-top: clamp(40px, 6vw, 72px);
+  }
+  .chapitre h2 {
+    margin-bottom: 20px;
+  }
+  .rangees {
+    display: grid;
+    gap: clamp(12px, 1.6vw, 20px);
+  }
+  .rangee {
+    display: grid;
+    gap: clamp(12px, 1.6vw, 20px);
+  }
+  .rangee figure {
+    margin: 0;
+    min-width: 0;
+  }
+  .rangee :global(img) {
+    width: 100%;
+    background: var(--filet);
+  }
+  .rangee.paire {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: start;
+  }
+  .rangee.seule figure {
+    width: min(100%, 62%);
+  }
+  .bloc-film,
+  .temoignage,
+  .appel {
+    display: grid;
+    gap: 18px;
+    padding-top: clamp(48px, 7vw, 88px);
+  }
+  .bloc-film {
+    max-width: 1100px;
+  }
+  blockquote {
+    margin: 0;
+    font-size: 1.2rem;
+  }
+  .appel {
+    padding-bottom: clamp(48px, 7vw, 88px);
+  }
+  .cartes {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(16px, 2vw, 28px);
+  }
+  @media (max-width: 760px) {
+    .rangee.paire {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .rangee.seule figure {
+      width: 100%;
+    }
+    .cartes {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    }
+    .cartes > :global(:nth-child(3)) {
+      display: none;
+    }
+  }
+</style>

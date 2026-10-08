@@ -1,0 +1,75 @@
+---
+import { site } from '../data/site';
+const annee = new Date().getFullYear();
+---
+
+<footer class="pied">
+  <div class="conteneur grille">
+    <div class="bloc">
+      <p class="nom">{site.nom}</p>
+      <p>{site.metier}</p>
+      <p class="legende">{site.zones}, ailleurs sur demande.</p>
+    </div>
+    <div class="bloc">
+      <p class="titre-bloc">Contact</p>
+      <p><a href={`mailto:${site.email}`}>{site.email}</a></p>
+      <p><a href={`tel:${site.telephone}`}>{site.telephoneAffiche}</a></p>
+      <p>
+        <a href={site.instagram} rel="noopener">Instagram</a>
+        <span aria-hidden="true">, </span>
+        <a href={site.facebook} rel="noopener">Facebook</a>
+      </p>
+    </div>
+    <div class="bloc">
+      <p class="titre-bloc">Le site</p>
+      <p><a href="/mariages/">Tous les mariages</a></p>
+      <p><a href="/mentions-legales/">Mentions légales</a></p>
+      <p><a href="/confidentialite/">Confidentialité</a></p>
+      <p><button type="button" class="lien-bouton" data-ouvrir-consentement>Gérer les cookies</button></p>
+    </div>
+  </div>
+  <div class="conteneur">
+    <p class="legende copyright">© {annee} {site.nom}. Photos et films : tous droits réservés.</p>
+  </div>
+</footer>
+
+<style>
+  .pied {
+    border-top: 1px solid var(--filet);
+    padding-block: 48px 32px;
+    font-size: 0.95rem;
+  }
+  .grille {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 32px;
+  }
+  .bloc {
+    display: grid;
+    gap: 6px;
+    align-content: start;
+  }
+  .nom,
+  .titre-bloc {
+    font-weight: 600;
+  }
+  .lien-bouton {
+    background: none;
+    border: 0;
+    padding: 0;
+    font: inherit;
+    color: var(--pierre);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    cursor: pointer;
+  }
+  .copyright {
+    margin-top: 36px;
+  }
+  @media (max-width: 720px) {
+    .grille {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 24px;
+    }
+  }
+</style>

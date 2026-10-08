@@ -1,0 +1,93 @@
+---
+import { Image } from 'astro:assets';
+
+interface Props {
+  id: string;
+  titre: string;
+}
+
+const { id, titre } = Astro.props;
+// La vignette est téléchargée au build : aucune requête vers YouTube avant le clic.
+const vignette = `https://img.youtube.com/vi/${id}/maxresdefault.jpg`;
+---
+
+<div class="film" data-film={id} data-titre={titre}>
+  <button type="button" class="lancer" aria-label={`Lire le film : ${titre}`}>
+    <Image
+      src={vignette}
+      alt=""
+      width={1280}
+      height={720}
+      widths={[480, 800, 1280]}
+      sizes="(min-width: 900px) 45vw, 100vw"
+      format="webp"
+      quality={72}
+      loading="lazy"
+    />
+    <span class="pastille" aria-hidden="true">
+      <svg width="22" height="22" viewBox="0 0 22 22"><path d="M7 4.5v13l11-6.5z" fill="currentColor"></path></svg>
+    </span>
+  </button>
+</div>
+
+<style>
+  .film {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    background: var(--encre);
+    overflow: hidden;
+  }
+  .lancer {
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+  }
+  .lancer :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .pastille {
+    position: absolute;
+    left: 16px;
+    bottom: 16px;
+    display: grid;
+    place-items: center;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: var(--blanc);
+    color: var(--encre);
+  }
+  .lancer:hover .pastille,
+  .lancer:focus-visible .pastille {
+    background: var(--pierre);
+    color: var(--blanc);
+  }
+  .film :global(iframe) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-film]').forEach((bloc) => {
+    const bouton = bloc.querySelector('button');
+    bouton?.addEventListener('click', () => {
+      const iframe = document.createElement('iframe');
+      iframe.src = `https://www.youtube-nocookie.com/embed/${bloc.dataset.film}?autoplay=1&rel=0`;
+      iframe.title = bloc.dataset.titre ?? 'Film de mariage';
+      iframe.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+      iframe.allowFullscreen = true;
+      bloc.replaceChildren(iframe);
+      iframe.focus();
+    });
+  });
+</script>

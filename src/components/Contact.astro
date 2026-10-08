@@ -1,0 +1,207 @@
+---
+import { site, prestations } from '../data/site';
+---
+
+<section class="section" id="contact" aria-labelledby="titre-contact">
+  <div class="conteneur grille">
+    <div class="intro">
+      <h2 id="titre-contact">Vous vous mariez quand, et où ?</h2>
+      <p class="prose">
+        Envoyez-moi votre date et le lieu : je vous dis si je suis libre et on en parle. Je réponds {site.delaiReponse}.
+      </p>
+      <dl class="coordonnees">
+        <div><dt>E-mail</dt><dd><a href={`mailto:${site.email}`}>{site.email}</a></dd></div>
+        <div><dt>Téléphone</dt><dd><a href={`tel:${site.telephone}`}>{site.telephoneAffiche}</a></dd></div>
+        <div><dt>Instagram</dt><dd><a href={site.instagram} rel="noopener">{site.instagramNom}</a></dd></div>
+        <div><dt>Zones</dt><dd>{site.zones}, ailleurs sur demande</dd></div>
+      </dl>
+    </div>
+
+    <form class="formulaire" id="formulaire-contact" action={site.formspree} method="POST" novalidate>
+      <p class="piege" aria-hidden="true"><label>Ne pas remplir <input name="_gotcha" tabindex="-1" autocomplete="off" /></label></p>
+      <div class="ligne">
+        <div class="champ">
+          <label for="prenom">Prénom</label>
+          <input id="prenom" name="prenom" type="text" autocomplete="given-name" required />
+        </div>
+        <div class="champ">
+          <label for="nom">Nom</label>
+          <input id="nom" name="nom" type="text" autocomplete="family-name" required />
+        </div>
+      </div>
+      <div class="ligne">
+        <div class="champ">
+          <label for="email">E-mail</label>
+          <input id="email" name="email" type="email" autocomplete="email" required />
+        </div>
+        <div class="champ">
+          <label for="telephone">Téléphone <span class="facultatif">(facultatif)</span></label>
+          <input id="telephone" name="telephone" type="tel" autocomplete="tel" />
+        </div>
+      </div>
+      <div class="ligne">
+        <div class="champ">
+          <label for="date">Date du mariage</label>
+          <input id="date" name="date" type="date" />
+        </div>
+        <div class="champ">
+          <label for="lieu">Lieu (commune ou salle)</label>
+          <input id="lieu" name="lieu" type="text" />
+        </div>
+      </div>
+      <div class="champ">
+        <label for="prestation">Ce qui vous intéresse</label>
+        <select id="prestation" name="prestation">
+          <option value="">Je ne sais pas encore</option>
+          {prestations.map((p) => <option value={p.nom}>{p.nom}</option>)}
+        </select>
+      </div>
+      <div class="champ">
+        <label for="message">Votre message</label>
+        <textarea id="message" name="message" rows="5"></textarea>
+      </div>
+      <p class="legende rgpd">
+        Vos coordonnées servent uniquement à répondre à votre demande. Elles transitent par le service Formspree, aux
+        États-Unis. <a href="/confidentialite/">Confidentialité</a>
+      </p>
+      <div class="envoi">
+        <button type="submit" class="bouton">Envoyer</button>
+        <p class="statut" role="status" aria-live="polite"></p>
+      </div>
+    </form>
+  </div>
+</section>
+
+<style>
+  .grille {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
+    gap: clamp(32px, 6vw, 96px);
+    align-items: start;
+  }
+  .intro {
+    display: grid;
+    gap: 18px;
+  }
+  .coordonnees {
+    display: grid;
+    gap: 10px;
+    margin: 12px 0 0;
+  }
+  .coordonnees div {
+    display: grid;
+    grid-template-columns: 7rem minmax(0, 1fr);
+    gap: 12px;
+  }
+  .coordonnees dt {
+    color: var(--encre-2);
+  }
+  .coordonnees dd {
+    margin: 0;
+    overflow-wrap: anywhere;
+  }
+  .formulaire {
+    display: grid;
+    gap: 16px;
+  }
+  .ligne {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 16px;
+  }
+  .champ {
+    display: grid;
+    gap: 6px;
+  }
+  label {
+    font-weight: 500;
+  }
+  .facultatif {
+    font-weight: 400;
+    color: var(--encre-2);
+  }
+  input,
+  select,
+  textarea {
+    width: 100%;
+    font: inherit;
+    color: var(--encre);
+    background: var(--blanc);
+    border: 1px solid var(--champ);
+    border-radius: 3px;
+    padding: 11px 12px;
+  }
+  textarea {
+    resize: vertical;
+  }
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible {
+    outline: 2px solid var(--encre);
+    outline-offset: 1px;
+  }
+  .piege {
+    position: absolute;
+    left: -9999px;
+  }
+  .envoi {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px 20px;
+  }
+  .statut:empty {
+    display: none;
+  }
+  :global(.merci) {
+    display: grid;
+    gap: 10px;
+  }
+  @media (max-width: 860px) {
+    .grille {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+  @media (max-width: 560px) {
+    .ligne {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>
+
+<script>
+  import { site } from '../data/site';
+
+  const form = document.getElementById('formulaire-contact') as HTMLFormElement | null;
+  const statut = form?.querySelector('.statut') as HTMLElement | null;
+  const bouton = form?.querySelector('button[type="submit"]') as HTMLButtonElement | null;
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!form.reportValidity()) return;
+    if (bouton) bouton.disabled = true;
+    if (statut) statut.textContent = 'Envoi en cours…';
+    try {
+      const reponse = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { Accept: 'application/json' },
+      });
+      if (!reponse.ok) throw new Error(String(reponse.status));
+      const w = window as unknown as { gtag?: (...a: unknown[]) => void; hgConsentement?: () => boolean };
+      if (w.hgConsentement?.() && w.gtag) {
+        w.gtag('event', 'conversion', { send_to: site.googleAds.conversion, value: 1.0, currency: 'EUR' });
+      }
+      const merci = document.createElement('div');
+      merci.className = 'merci';
+      merci.tabIndex = -1;
+      merci.innerHTML = `<h3>Message bien reçu</h3><p class="prose">Je vous réponds ${site.delaiReponse}. Si c'est urgent, appelez-moi au <a href="tel:${site.telephone}">${site.telephoneAffiche}</a>.</p>`;
+      form.replaceWith(merci);
+      merci.focus();
+    } catch {
+      if (statut)
+        statut.textContent = `L'envoi n'a pas abouti. Réessayez, ou écrivez-moi directement à ${site.email}.`;
+      if (bouton) bouton.disabled = false;
+    }
+  });
+</script>

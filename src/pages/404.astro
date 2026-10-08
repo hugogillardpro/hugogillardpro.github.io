@@ -1,0 +1,25 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Page introuvable | Hugo Gillard" description="Cette page n'existe pas ou a été déplacée." noindex>
+  <section class="conteneur page-texte">
+    <h1>Cette page n'existe pas</h1>
+    <p class="prose">Elle a peut-être été déplacée. Vous pouvez repartir de l'accueil ou parcourir les mariages.</p>
+    <p class="liens"><a class="bouton" href="/">Accueil</a> <a href="/mariages/">Tous les mariages</a></p>
+  </section>
+</Base>
+
+<style>
+  .page-texte {
+    display: grid;
+    gap: 20px;
+    padding-block: clamp(48px, 8vw, 120px);
+  }
+  .liens {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 14px 24px;
+  }
+</style>
