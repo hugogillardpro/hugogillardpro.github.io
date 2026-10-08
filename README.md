@@ -1,21 +1,22 @@
 # hugogillardpro.com
 
-Site d'Hugo Gillard, photographe et vidéaste de mariage. Construit avec [Astro](https://docs.astro.build) en site statique, publié sur GitHub Pages.
+Site d'Hugo Gillard, photographe et vidéaste de mariage. Construit avec [Next.js](https://nextjs.org/docs) en export statique, publié sur GitHub Pages.
 
 ## Travailler en local
 
 ```bash
 npm install
-npm run dev      # http://localhost:4321
-npm run build    # génère le site dans dist/
+npm run dev       # http://localhost:3000
+npm run build     # génère le site dans out/
+npm run preview   # sert out/ sur http://localhost:4323 comme GitHub Pages le ferait
 ```
 
-Node 22.12 ou plus récent.
+Node 22.12 ou plus récent. Le script `scripts/images.mjs` (lancé automatiquement par `dev` et `build`) crée les variantes WebP de toutes les photos dans `public/img/`, qui n'est pas versionné.
 
 ## Ajouter un mariage
 
-1. Créer un dossier `src/content/mariages/prenom-et-prenom/`.
-2. Y déposer 10 à 20 photos JPEG de 1600 px de large ou de haut, avec des noms parlants (`prenom-prenom-sortie-eglise.jpg`).
+1. Créer un dossier `content/mariages/prenom-et-prenom/`.
+2. Y déposer 10 à 20 photos JPEG (2000 px sur le grand côté suffit), avec des noms parlants : `prenom-prenom-sortie-eglise.jpg`.
 3. Créer `index.md` dans ce dossier, sur le modèle d'un mariage existant :
 
 ```yaml
@@ -40,13 +41,12 @@ temoignage: null
 ---
 ```
 
-Les photos sont affichées dans l'ordre de la liste. Deux photos verticales qui se suivent sont placées côte à côte, une photo horizontale prend toute la largeur.
-
-Le site vérifie chaque fiche au moment du build : s'il manque un champ ou une photo, le build échoue et le site en ligne ne change pas.
+Les photos s'affichent dans l'ordre de la liste. Deux photos verticales qui se suivent sont placées côte à côte, une photo horizontale prend toute la largeur. Chaque fiche est vérifiée au build : s'il manque un champ ou une photo, le build échoue et le site en ligne ne change pas.
 
 ## Réglages
 
-- `src/data/site.ts` : coordonnées, formules et prix (« à partir de »), teasers YouTube, mentions légales, mariage mis en avant sur l'accueil.
+- `lib/site.ts` : coordonnées, formules et prix (« à partir de »), mentions légales, mariage mis en avant sur l'accueil.
+- `content/films.json` : les teasers YouTube de l'accueil.
 - Un témoignage ne s'affiche que si `verifie: true`, une fois sa provenance confirmée (avis Google, message des mariés).
 
 ## Mise en ligne
