@@ -1,5 +1,6 @@
 'use client';
 
+import { CaretLeft, CaretRight, X } from '@phosphor-icons/react/ssr';
 import { useEffect, useRef, useState } from 'react';
 import Photo from './Photo';
 import type { Img } from '@/lib/images';
@@ -7,6 +8,9 @@ import type { Img } from '@/lib/images';
 export type PhotoItem = { image: Img; alt: string; chapitre: string };
 type Chapitre = { titre: string; photos: PhotoItem[] };
 type Rangee = { type: 'large' | 'paire' | 'seule'; photos: PhotoItem[] };
+// Comment la photo affichée est arrivée : elle glisse dans le sens du geste (clic ou balayage),
+// mais change sans animation au clavier, où l'on enchaîne les photos vite.
+type Entree = 'ouverture' | 'suivante' | 'precedente' | 'aucune';
 
 // Une horizontale prend toute la largeur ; deux verticales qui se suivent vont côte à côte.
 function rangees(photos: PhotoItem[]): Rangee[] {
@@ -33,11 +37,22 @@ const TAILLES = {
 export default function Gallery({ chapitres }: { chapitres: Chapitre[] }) {
   const toutes = chapitres.flatMap((c) => c.photos);
   const [index, setIndex] = useState<number | null>(null);
+  const [entree, setEntree] = useState<Entree>('ouverture');
   const dialog = useRef<HTMLDialogElement>(null);
   const toucheX = useRef<number | null>(null);
 
-  const suivante = () => setIndex((i) => (i === null ? null : (i + 1) % toutes.length));
-  const precedente = () => setIndex((i) => (i === null ? null : (i - 1 + toutes.length) % toutes.length));
+  const ouvrir = (i: number) => {
+    setEntree('ouverture');
+    setIndex(i);
+  };
+  const suivante = (anime = true) => {
+    setEntree(anime ? 'suivante' : 'aucune');
+    setIndex((i) => (i === null ? null : (i + 1) % toutes.length));
+  };
+  const precedente = (anime = true) => {
+    setEntree(anime ? 'precedente' : 'aucune');
+    setIndex((i) => (i === null ? null : (i - 1 + toutes.length) % toutes.length));
+  };
 
   useEffect(() => {
     const d = dialog.current;
@@ -50,8 +65,8 @@ export default function Gallery({ chapitres }: { chapitres: Chapitre[] }) {
     if (index === null) return;
     document.body.style.overflow = 'hidden';
     const touche = (e: KeyboardEvent) => {
-      if (e.key === 'ArrowRight') suivante();
-      if (e.key === 'ArrowLeft') precedente();
+      if (e.key === 'ArrowRight') suivante(false);
+      if (e.key === 'ArrowLeft') precedente(false);
     };
     window.addEventListener('keydown', touche);
     return () => {
@@ -81,7 +96,7 @@ export default function Gallery({ chapitres }: { chapitres: Chapitre[] }) {
                         <button
                           type="button"
                           className="photo-bouton"
-                          onClick={() => setIndex(i)}
+                          onClick={() => ouvrir(i)}
                           aria-label={`Agrandir : ${p.alt}`}
                         >
                           <Photo image={p.image} alt={p.alt} sizes={TAILLES[r.type]} loading="lazy" />
@@ -116,7 +131,7 @@ export default function Gallery({ chapitres }: { chapitres: Chapitre[] }) {
               if (depart - fin > 50) suivante();
             }}
           >
-            <div className="visionneuse__image">
+            <div className="visionneuse__image" data-entree={entree}>
               <Photo key={actuelle.image.id} image={actuelle.image} alt={actuelle.alt} className="visionneuse__img" sizes="100vw" />
             </div>
             <div className="visionneuse__pied">
@@ -126,21 +141,15 @@ export default function Gallery({ chapitres }: { chapitres: Chapitre[] }) {
               </p>
             </div>
             <button type="button" className="visionneuse__fermer" onClick={() => setIndex(null)} aria-label="Fermer">
-              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.5">
-                <path d="M3 3l12 12M15 3L3 15" />
-              </svg>
+              <X size={20} weight="light" aria-hidden="true" />
             </button>
             {toutes.length > 1 && (
               <>
-                <button type="button" className="visionneuse__prec" onClick={precedente} aria-label="Photo précédente">
-                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.5">
-                    <path d="M11 3L5 9l6 6" />
-                  </svg>
+                <button type="button" className="visionneuse__prec" onClick={() => precedente()} aria-label="Photo précédente">
+                  <CaretLeft size={20} weight="light" aria-hidden="true" />
                 </button>
-                <button type="button" className="visionneuse__suiv" onClick={suivante} aria-label="Photo suivante">
-                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.5">
-                    <path d="M7 3l6 6-6 6" />
-                  </svg>
+                <button type="button" className="visionneuse__suiv" onClick={() => suivante()} aria-label="Photo suivante">
+                  <CaretRight size={20} weight="light" aria-hidden="true" />
                 </button>
               </>
             )}

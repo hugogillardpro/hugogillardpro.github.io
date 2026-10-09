@@ -7,7 +7,6 @@ import HeroVideo from '@/components/HeroVideo';
 import { Sceau } from '@/components/Brand';
 import JsonLd from '@/components/JsonLd';
 import Photo from '@/components/Photo';
-import Reveal from '@/components/Reveal';
 import WeddingCard from '@/components/WeddingCard';
 import { getMariages } from '@/lib/content';
 import { de } from '@/lib/format';
@@ -60,7 +59,7 @@ export default function Accueil() {
           alt={`Extrait du film du mariage ${de(accueil.video.couple)}`}
         />
         <div className="conteneur hero__contenu">
-          <Sceau className="hero__sceau" texte="var(--nuit-texte)" or="var(--or-clair)" />
+          <Sceau className="hero__sceau" texte="var(--nuit-texte)" or="var(--or-clair)" trace />
           <h1 className="hero__titre">Photographe et vidéaste de mariage</h1>
           <p className="hero__sous">Du Hainaut au Nord de la France, et partout où vous m'emmènerez.</p>
           <div className="hero__actions">
@@ -112,9 +111,9 @@ export default function Accueil() {
           </div>
           <div className="grille-mariages">
             {recents.map((m, i) => (
-              <Reveal key={m.slug} className={i === 0 ? 'large' : ''} delay={(i % 3) as 0 | 1 | 2}>
+              <div key={m.slug} className={i === 0 ? 'large' : undefined}>
                 <WeddingCard mariage={m} large={i === 0} prioritaire={i < 2} />
-              </Reveal>
+              </div>
             ))}
           </div>
         </div>

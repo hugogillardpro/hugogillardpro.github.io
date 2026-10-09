@@ -1,5 +1,6 @@
 'use client';
 
+import { CaretDown } from '@phosphor-icons/react/ssr';
 import Link from 'next/link';
 import { useState, type FormEvent } from 'react';
 import { prestations, site } from '@/lib/site';
@@ -86,14 +87,17 @@ export default function ContactForm() {
       </div>
       <div className="champ">
         <label htmlFor="prestation">Ce qui vous intéresse</label>
-        <select id="prestation" name="prestation" defaultValue="">
-          <option value="">Je ne sais pas encore</option>
-          {prestations.map((p) => (
-            <option key={p.nom} value={p.nom}>
-              {p.nom}
-            </option>
-          ))}
-        </select>
+        <div className="champ__select">
+          <select id="prestation" name="prestation" defaultValue="">
+            <option value="">Je ne sais pas encore</option>
+            {prestations.map((p) => (
+              <option key={p.nom} value={p.nom}>
+                {p.nom}
+              </option>
+            ))}
+          </select>
+          <CaretDown size={16} weight="regular" aria-hidden="true" />
+        </div>
       </div>
       <div className="champ">
         <label htmlFor="message">Votre message</label>

@@ -65,27 +65,44 @@ function chargerGoogleAds() {
 
 export default function Consent() {
   const [visible, setVisible] = useState(false);
+  // Au premier passage, le bandeau monte un peu après l'ouverture de la page ;
+  // rouvert depuis « Gérer les cookies », il monte tout de suite.
+  const [differe, setDiffere] = useState(false);
+  const [sortie, setSortie] = useState(false);
 
   useEffect(() => {
     window.hgConsentement = () => lire() === 'accepte';
     const choix = lire();
     if (choix === 'accepte') chargerGoogleAds();
-    else if (choix !== 'refuse') setVisible(true);
-    const ouvrir = () => setVisible(true);
+    else if (choix !== 'refuse') {
+      setDiffere(true);
+      setVisible(true);
+    }
+    const ouvrir = () => {
+      setDiffere(false);
+      setSortie(false);
+      setVisible(true);
+    };
     window.addEventListener('hg:consentement', ouvrir);
     return () => window.removeEventListener('hg:consentement', ouvrir);
   }, []);
 
   function choisir(valeur: 'accepte' | 'refuse') {
     ecrire(valeur);
-    setVisible(false);
+    // Il redescend par où il est arrivé, puis disparaît.
+    setSortie(true);
+    window.setTimeout(() => setVisible(false), 260);
     if (valeur === 'accepte') chargerGoogleAds();
     else window.gtag?.('consent', 'update', REFUSE);
   }
 
   if (!visible) return null;
   return (
-    <div className="consentement" role="region" aria-label="Cookies">
+    <div
+      className={['consentement', differe && 'consentement--differe', sortie && 'consentement--sortie'].filter(Boolean).join(' ')}
+      role="region"
+      aria-label="Cookies"
+    >
       <div className="conteneur consentement__interieur">
         <p>
           J'utilise un traceur Google Ads pour savoir quelles annonces amènent des demandes de contact. Il ne se charge

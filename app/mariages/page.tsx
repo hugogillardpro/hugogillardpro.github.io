@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import JsonLd from '@/components/JsonLd';
-import Reveal from '@/components/Reveal';
 import WeddingCard from '@/components/WeddingCard';
 import { getMariages } from '@/lib/content';
 import { site } from '@/lib/site';
@@ -38,9 +37,9 @@ export default function PageMariages() {
         {mariages.map((m, i) => {
           const large = i % 6 === 0;
           return (
-            <Reveal key={m.slug} className={large ? 'large' : ''} delay={(i % 3) as 0 | 1 | 2}>
+            <div key={m.slug} className={large ? 'large' : undefined}>
               <WeddingCard mariage={m} large={large} prioritaire={i < 2} />
-            </Reveal>
+            </div>
           );
         })}
       </div>

@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import BoutonCookies from './BoutonCookies';
 import { Sceau } from './Brand';
+import Reseaux from './Reseaux';
 import { site } from '@/lib/site';
 
 export default function Footer() {
@@ -37,17 +38,8 @@ export default function Footer() {
           <li>
             <a href={`tel:${site.telephone}`}>{site.telephoneAffiche}</a>
           </li>
-          <li>
-            <a href={site.instagram} rel="noopener">
-              Instagram
-            </a>
-          </li>
-          <li>
-            <a href={site.facebook} rel="noopener">
-              Facebook
-            </a>
-          </li>
         </ul>
+        <Reseaux />
         <div className="pied__bas">
           <p>
             © {annee} {site.nom}. Photos et films : tous droits réservés.

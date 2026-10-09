@@ -12,6 +12,7 @@ import math
 import os
 from functools import lru_cache
 
+from fontTools.pens.perimeterPen import PerimeterPen
 from fontTools.pens.svgPathPen import SVGPathPen
 from fontTools.pens.transformPen import TransformPen
 from fontTools.ttLib import TTFont
@@ -44,6 +45,14 @@ def chemin(ch, x=0.0, y=0.0, s=1.0, **k):
     return pen.getCommands()
 
 
+def longueur(ch, s=1.0, **k):
+    """Longueur totale des contours d'un glyphe : sert à l'animation de tracé du sceau."""
+    _, gs, nom = glyphe(ch, **k)
+    pen = PerimeterPen(gs)
+    gs[nom].draw(TransformPen(pen, (s, 0, 0, -s, 0, 0)))
+    return round(pen.value)
+
+
 def mot(txt, x=0.0, y=0.0, s=1.0, interlettre=0, **k):
     largeur = (sum(avance(c, **k) for c in txt) + interlettre * (len(txt) - 1)) * s
     d, cx = [], x
@@ -63,6 +72,7 @@ MONO = {
     'bande': BANDE,
     'reserve': RESERVE * 2,
     'viewBox': [-20, -760, DX + 790, 800],
+    'longueurs': {'h': longueur('H', wght=420), 'g': longueur('G', style='italic', wght=400)},
 }
 
 # ---------- Logotype : HUGO GILLARD en capitales espacées ----------

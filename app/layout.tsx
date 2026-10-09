@@ -31,10 +31,6 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="fr">
-      <head>
-        {/* Les apparitions au défilement ne sont activées que si le script tourne : sans lui, tout reste visible. */}
-        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
-      </head>
       <body>
         <a className="evitement" href="#contenu">
           Aller au contenu

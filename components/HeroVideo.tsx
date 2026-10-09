@@ -1,5 +1,6 @@
 'use client';
 
+import { Pause, Play } from '@phosphor-icons/react/ssr';
 import { useEffect, useRef, useState } from 'react';
 import Photo from './Photo';
 import type { Img } from '@/lib/images';
@@ -67,15 +68,7 @@ export default function HeroVideo({ src, affiche, alt }: { src: string; affiche:
       )}
       {active && visible && (
         <button type="button" className="hero__pause" onClick={basculer} aria-label={pause ? 'Relancer la vidéo' : 'Mettre la vidéo en pause'}>
-          {pause ? (
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor">
-              <path d="M3.5 2v10l8-5z" />
-            </svg>
-          ) : (
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor">
-              <path d="M3 2h3v10H3zM8 2h3v10H8z" />
-            </svg>
-          )}
+          {pause ? <Play size={14} weight="fill" aria-hidden="true" /> : <Pause size={14} weight="fill" aria-hidden="true" />}
         </button>
       )}
     </div>

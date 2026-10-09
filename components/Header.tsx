@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { Logotype } from './Brand';
+import Reseaux from './Reseaux';
 
 const gauche = [
   { href: '/mariages/', label: 'Mariages' },
@@ -111,6 +112,7 @@ export default function Header() {
         <Link href="/#contact" className="btn" onClick={fermer}>
           Vérifier ma date
         </Link>
+        <Reseaux />
       </div>
     </>
   );

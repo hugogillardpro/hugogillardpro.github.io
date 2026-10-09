@@ -1,5 +1,6 @@
 'use client';
 
+import { Play } from '@phosphor-icons/react/ssr';
 import { useState } from 'react';
 import Photo from './Photo';
 import type { Img } from '@/lib/images';
@@ -30,9 +31,7 @@ export default function Film({
         <button type="button" className="film__bouton" onClick={() => setActif(true)} aria-label={`Lire : ${titre}`}>
           <Photo image={vignette} alt="" className="film__img" sizes={sizes} loading="lazy" />
           <span className="film__play" aria-hidden="true">
-            <svg width="26" height="26" viewBox="0 0 26 26" fill="currentColor">
-              <path d="M9 5.5v15l12-7.5z" />
-            </svg>
+            <Play size={24} weight="fill" />
           </span>
         </button>
       )}

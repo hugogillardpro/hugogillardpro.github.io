@@ -1,3 +1,4 @@
+import { FacebookLogo, InstagramLogo } from '@phosphor-icons/react/ssr';
 import ContactForm from './ContactForm';
 import { site } from '@/lib/site';
 
@@ -25,10 +26,15 @@ export default function Contact() {
               </dd>
             </div>
             <div>
-              <dt>Instagram</dt>
-              <dd>
+              <dt>Réseaux</dt>
+              <dd className="coordonnees__reseaux">
                 <a href={site.instagram} rel="noopener">
+                  <InstagramLogo size={20} weight="light" aria-hidden="true" />
                   {site.instagramNom}
+                </a>
+                <a href={site.facebook} rel="noopener">
+                  <FacebookLogo size={20} weight="light" aria-hidden="true" />
+                  Facebook
                 </a>
               </dd>
             </div>
