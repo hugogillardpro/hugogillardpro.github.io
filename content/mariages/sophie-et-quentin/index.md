@@ -48,12 +48,18 @@ photos:
   - src: ./sophie-quentin-contre-jour-parc.jpg
     chapitre: "Les photos de couple"
     alt: "Sophie et Quentin marchent main dans la main sur une pelouse, à contre-jour sous les arbres."
+  - src: ./sophie-quentin-pose-porte-glycine.jpg
+    chapitre: "Les photos de couple"
+    alt: "Quentin assis sur une chaise devant la porte vitrée d'une maison en pierre, Sophie debout à ses côtés, un bouquet rose à la main, sous la glycine"
   - src: ./sophie-quentin-baiser-facade.jpg
     chapitre: "Les photos de couple"
     alt: "Sophie et Quentin s'embrassent devant une façade en pierre couverte de plantes grimpantes."
   - src: ./sophie-quentin-lancer-bouquet.jpg
     chapitre: "Le vin d'honneur"
     alt: "Sophie lance son bouquet aux invités rassemblés dans une cour gravillonnée, devant un long bâtiment à auvent."
+  - src: ./sophie-quentin-danse-des-rubans.jpg
+    chapitre: "Le vin d'honneur"
+    alt: "Quentin tient un mât d'où partent des rubans bleus, les invités tournent autour en courant dans la cour en gravier"
   - src: ./sophie-quentin-danse-contre-jour.jpg
     chapitre: "La soirée"
     alt: "En noir et blanc, silhouettes de Sophie et Quentin dansant face à face, à contre-jour devant un projecteur."

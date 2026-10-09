@@ -18,7 +18,7 @@ export default function WeddingCard({
     .join(' · ');
   return (
     <Link href={`/mariages/${m.slug}/`} className={`carte ${large ? 'carte--large' : ''}`}>
-      <span className="carte__photo">
+      <span className="carte__photo" data-apparition="photo">
         <Photo
           image={large ? m.hero : m.couverture}
           alt=""

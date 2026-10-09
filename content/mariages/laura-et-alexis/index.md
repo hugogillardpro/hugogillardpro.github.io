@@ -33,6 +33,9 @@ photos:
   - src: ./laura-alexis-voile-arbres.jpg
     chapitre: "Les photos de couple"
     alt: "Laura, enlacée par Alexis, sourit ; son long voile s'étale sur une terrasse pavée devant de grands arbres"
+  - src: ./laura-alexis-baiser-voile-dentelle.jpg
+    chapitre: "Les photos de couple"
+    alt: "Laura et Alexis s'embrassent devant de grands arbres, le long voile de dentelle déployé sur les pavés"
   - src: ./laura-alexis-baiser-voile.jpg
     chapitre: "Les photos de couple"
     alt: "Alexis penche Laura pour l'embrasser, voile déployé, sur une terrasse pavée devant un bâtiment blanc, en noir et blanc"

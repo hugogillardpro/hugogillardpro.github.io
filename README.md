@@ -26,7 +26,7 @@ couple: "Prénom & Prénom"
 date: 2026-09-19              # ou null
 lieu: "Nom de la salle"       # ou null : rien n'est affiché
 commune: "Commune"            # ou null
-zone: hainaut                 # hainaut, nord, autre ou null
+zone: belgique                # belgique, france, autre ou null
 film: null                    # identifiant YouTube du teaser, ex. 2l7xX6kgNaI
 publie: true                  # false pour masquer la page
 resume: "Une ou deux phrases sur le déroulé de la journée."

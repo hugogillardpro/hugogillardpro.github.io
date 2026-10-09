@@ -14,7 +14,7 @@ const schema = z.object({
   // À compléter avec Hugo : rien n'est affiché tant que la valeur est vide.
   lieu: z.string().nullable().default(null),
   commune: z.string().nullable().default(null),
-  zone: z.enum(['hainaut', 'nord', 'autre']).nullable().default(null),
+  zone: z.enum(['belgique', 'france', 'autre']).nullable().default(null),
   film: z.string().nullable().default(null),
   publie: z.boolean().default(true),
   resume: z.string(),
@@ -37,7 +37,7 @@ export type Mariage = {
   date: Date | null;
   lieu: string | null;
   commune: string | null;
-  zone: 'hainaut' | 'nord' | 'autre' | null;
+  zone: 'belgique' | 'france' | 'autre' | null;
   film: string | null;
   resume: string;
   hero: Img;

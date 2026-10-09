@@ -11,7 +11,7 @@ export const site = {
   instagram: 'https://www.instagram.com/hugogillardpro',
   instagramNom: '@hugogillardpro',
   facebook: 'https://www.facebook.com/hugoglld',
-  zones: 'Hainaut et Nord de la France',
+  zones: 'Toute la Belgique et le Nord de la France',
   delaiReponse: 'sous 48 heures',
   // Durée de conservation des demandes de contact (page Confidentialité) : à confirmer avec Hugo.
   conservation: "trois ans après notre dernier échange, si aucun contrat n'est signé",
@@ -32,13 +32,27 @@ export const site = {
 };
 
 // Formules reprises du site actuel. Le prix « à partir de » s'affiche dès qu'il est renseigné (TVAC).
-export const prestations: { nom: string; description: string; inclus: string[]; prix: string | null }[] = [
+// `image` : une photo choisie par Hugo pour son ancien site (ou l'image du teaser pour le film).
+export type Prestation = {
+  nom: string;
+  description: string;
+  inclus: string[];
+  prix: string | null;
+  note: string | null;
+  image: string;
+  alt: string;
+};
+
+export const prestations: Prestation[] = [
   {
     nom: 'Reportage photo',
     description:
       "Je suis votre journée des préparatifs jusqu'à la pièce montée, et je photographie ce qui se passe.",
     inclus: ['Environ 700 photos retouchées', 'Galerie privée en ligne', 'Livraison en 3 à 5 mois'],
     prix: null,
+    note: null,
+    image: '/img/sophie-et-quentin/sophie-quentin-sous-le-voile',
+    alt: "Sophie et Quentin sous le voile, dans la nef d'une église gothique, en noir et blanc",
   },
   {
     nom: 'Film de mariage',
@@ -46,12 +60,18 @@ export const prestations: { nom: string; description: string; inclus: string[]; 
       "Un teaser de 30 secondes, puis un film d'une dizaine de minutes, monté sur une musique que nous choisissons ensemble.",
     inclus: ['Teaser de 30 secondes', "Film d'environ 10 minutes", 'Musique choisie ensemble'],
     prix: null,
+    note: null,
+    image: '/img/films/ofZSioZLUv4',
+    alt: "Image du film d'Elodie et Cédric : les mariés enlacés devant une grange, au soleil couchant",
   },
   {
     nom: 'Photo et film',
     description: 'Les deux regards sur la même journée : les photos, le teaser et le film.',
     inclus: ['Environ 500 photos retouchées', 'Teaser de 30 secondes', "Film d'environ 8 minutes"],
     prix: null,
+    note: 'La plus complète',
+    image: '/img/laura-et-alexis/laura-alexis-portee-baiser',
+    alt: "Alexis porte Laura et l'embrasse, sa robe virevoltant devant une grande demeure blanche",
   },
 ];
 
@@ -68,8 +88,9 @@ export const accueil = {
     mariage: 'laura-et-alexis',
   },
   mariageEnUne: 'sophie-et-quentin',
+  // La grande photo est celle qu'Hugo avait choisie pour la présentation de son ancien site.
   apropos: {
-    grande: '/img/lionnel-et-linda/lionnel-linda-sous-le-voile',
-    petite: '/img/sophie-et-quentin/sophie-quentin-pose-longue-parc',
+    grande: '/img/sophie-et-quentin/sophie-quentin-pose-porte-glycine',
+    petite: '/img/thomas-et-jenny/thomas-jenny-ceremonie-plein-air',
   },
 };

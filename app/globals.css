@@ -961,69 +961,136 @@ a {
   color: var(--nuit-texte-2);
 }
 
-/* ===== Prestations ===== */
-.prestations {
+/* ===== Formules ===== */
+.formules {
   display: grid;
-  grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
-  gap: clamp(40px, 7vw, 120px);
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  gap: clamp(40px, 6vw, 96px);
   align-items: start;
 }
 
-.prestations__tete {
-  display: grid;
-  gap: 22px;
-  justify-items: start;
+.formules__visuel {
   position: sticky;
   top: calc(var(--entete) + 32px);
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: var(--creme);
 }
 
-.formules {
+.formules__pile {
+  position: absolute;
+  inset: 0;
+}
+
+.formules__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  /* L'image qui s'en va attend que la suivante soit posée par-dessus : pas de creux pendant le fondu. */
+  transition: opacity 0s linear 500ms;
+}
+
+.formules__img[data-actif] {
+  z-index: 1;
+  opacity: 1;
+  transition: opacity 500ms var(--ease-in-out);
+}
+
+.formules__droite {
+  display: grid;
+  justify-items: start;
+  gap: 40px;
+}
+
+.formules__cadre {
+  position: relative;
+  width: 100%;
+}
+
+.formules__liste {
+  position: relative;
   list-style: none;
   margin: 0;
   padding: 0;
-  border-top: 1px solid var(--encre);
+}
+
+.formules__liste::before,
+.formule::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--filet-or);
+  transform-origin: left;
+}
+
+.formules__liste::before {
+  top: 0;
+}
+
+.formule::after {
+  bottom: 0;
+}
+
+/* Repère doré de la formule choisie : posé par transform (translateY puis scaleY) depuis Prestations.tsx. */
+.formules__repere {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 1;
+  width: 2px;
+  height: 1px;
+  background: var(--or);
+  transform-origin: top;
+  transform: scaleY(0);
+}
+
+.formules__repere[data-pret] {
+  transition: transform 450ms var(--ease-in-out);
 }
 
 .formule {
+  position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  grid-template-areas:
-    'nom prix'
-    'detail detail';
-  gap: 14px 32px;
-  padding-block: clamp(26px, 3vw, 40px);
-  border-bottom: 1px solid var(--filet-or);
+  gap: 14px;
+  padding: clamp(26px, 3vw, 36px) 0 clamp(26px, 3vw, 36px) clamp(24px, 3vw, 40px);
+}
+
+.formule__photo {
+  display: none;
+}
+
+.formule__tete {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 18px;
 }
 
 .formule__nom {
-  grid-area: nom;
   font-size: clamp(1.7rem, 2.6vw, 2.3rem);
+  color: var(--encre-2);
+  transition: color 200ms ease;
 }
 
-.formule__prix {
-  grid-area: prix;
-  align-self: baseline;
-  display: grid;
-  justify-items: end;
-  gap: 2px;
-  font-family: var(--serif);
-  font-size: 1.25rem;
-  white-space: nowrap;
+.formule[data-actif] .formule__nom {
+  color: var(--encre);
 }
 
-.formule__prix span {
-  font-family: var(--sans);
+.formule__note {
   font-size: 0.66rem;
+  font-weight: 500;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--encre-2);
+  color: var(--or-texte);
 }
 
-.formule__detail {
-  grid-area: detail;
-  display: grid;
-  gap: 14px;
-  max-width: 40rem;
+.formule__description {
+  max-width: 36rem;
   color: var(--encre-2);
 }
 
@@ -1051,6 +1118,11 @@ a {
   height: 1px;
   background: var(--or);
   transform: translateY(-5px);
+}
+
+.formule__prix {
+  font-family: var(--serif);
+  font-size: 1.2rem;
 }
 
 /* ===== Contact ===== */
@@ -1892,6 +1964,48 @@ a {
   font-size: 0.68rem;
 }
 
+/* ===== Apparitions au défilement (components/Apparitions.tsx) =====
+   Même geste que le sceau : les photos se découvrent du bas vers le haut, les filets se tracent.
+   Une seule fois, et seulement pour ce qui arrive en défilant. */
+@media (prefers-reduced-motion: no-preference) {
+  /* Le masque porte sur l'enfant : un élément entièrement masqué ne serait jamais signalé comme visible. */
+  [data-apparition='photo'][data-etat='attente'] > * {
+    clip-path: inset(100% 0 0 0);
+  }
+  [data-apparition='photo'][data-etat='attente'] img:not(.formules__img) {
+    transform: scale(1.06);
+  }
+  [data-apparition='photo'][data-etat='visible'] > *,
+  [data-apparition='photo'][data-etat='visible'] img:not(.formules__img) {
+    transition:
+      clip-path 900ms var(--ease-in-out) var(--retard, 0ms),
+      transform 1400ms var(--ease-out) var(--retard, 0ms);
+  }
+  [data-apparition='fondu'][data-etat='attente'] {
+    opacity: 0;
+  }
+  [data-apparition='fondu'][data-etat='visible'] {
+    transition: opacity 700ms var(--ease-out) calc(var(--retard, 0ms) + 350ms);
+  }
+  [data-apparition='filets'][data-etat='attente']::before,
+  [data-apparition='filets'][data-etat='attente'] > ::after {
+    transform: scaleX(0);
+  }
+  [data-apparition='filets'][data-etat='visible']::before,
+  [data-apparition='filets'][data-etat='visible'] > ::after {
+    transition: transform 1100ms var(--ease-in-out);
+  }
+  [data-apparition='filets'][data-etat='visible'] > :nth-child(1)::after {
+    transition-delay: 120ms;
+  }
+  [data-apparition='filets'][data-etat='visible'] > :nth-child(2)::after {
+    transition-delay: 240ms;
+  }
+  [data-apparition='filets'][data-etat='visible'] > :nth-child(3)::after {
+    transition-delay: 360ms;
+  }
+}
+
 /* Moins de mouvement : on garde les fondus qui aident à comprendre, on retire les déplacements. */
 @media (prefers-reduced-motion: reduce) {
   html {
@@ -1930,6 +2044,9 @@ a {
   .menu-mobile .reseaux {
     transform: none;
   }
+  .formules__repere[data-pret] {
+    transition: none;
+  }
   @starting-style {
     .consentement {
       transform: none;
@@ -1952,11 +2069,30 @@ a {
   .bouton-menu {
     display: inline-flex;
   }
-  .prestations {
+  .formules {
     grid-template-columns: minmax(0, 1fr);
   }
-  .prestations__tete {
-    position: static;
+  .formules__visuel,
+  .formules__repere {
+    display: none;
+  }
+  .formule {
+    padding-left: 0;
+  }
+  .formule__photo {
+    display: block;
+    aspect-ratio: 3 / 2;
+    overflow: hidden;
+    margin-bottom: 8px;
+    background: var(--creme);
+  }
+  .formule__photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .formule__nom {
+    color: var(--encre);
   }
   .apropos,
   .contact {
@@ -2018,16 +2154,6 @@ a {
   }
   .hero__legende {
     display: none;
-  }
-  .formule {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-areas:
-      'nom'
-      'detail'
-      'prix';
-  }
-  .formule__prix {
-    justify-items: start;
   }
   .formulaire__ligne {
     grid-template-columns: minmax(0, 1fr);

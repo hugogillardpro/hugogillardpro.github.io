@@ -7,15 +7,16 @@ import HeroVideo from '@/components/HeroVideo';
 import { Sceau } from '@/components/Brand';
 import JsonLd from '@/components/JsonLd';
 import Photo from '@/components/Photo';
+import Prestations from '@/components/Prestations';
 import WeddingCard from '@/components/WeddingCard';
 import { getMariages } from '@/lib/content';
 import { de } from '@/lib/format';
 import { img } from '@/lib/images';
 import { accueil, films, prestations, site } from '@/lib/site';
 
-const titre = 'Hugo Gillard, photographe et vidéaste de mariage en Hainaut et dans le Nord';
+const titre = 'Hugo Gillard, photographe et vidéaste de mariage en Belgique';
 const description =
-  "Reportages photo et films de mariage en Hainaut, dans le Nord de la France et au-delà. Environ 700 photos retouchées, un teaser et un film d'une dizaine de minutes. Découvrez des mariages complets, dans l'ordre de la journée.";
+  "Reportages photo et films de mariage partout en Belgique, dans le Nord de la France et au-delà. Environ 700 photos retouchées, un teaser et un film d'une dizaine de minutes. Découvrez des mariages complets, dans l'ordre de la journée.";
 
 export const metadata: Metadata = {
   title: { absolute: titre },
@@ -30,6 +31,7 @@ export default function Accueil() {
   const grande = img(accueil.apropos.grande);
   const petite = img(accueil.apropos.petite);
   const vignettes = new Map(films.map((f) => [f.id, img(`/img/films/${f.id}`)]));
+  const formules = prestations.map((p) => ({ ...p, image: img(p.image) }));
 
   const jsonld = {
     '@context': 'https://schema.org',
@@ -61,7 +63,7 @@ export default function Accueil() {
         <div className="conteneur hero__contenu">
           <Sceau className="hero__sceau" texte="var(--nuit-texte)" or="var(--or-clair)" trace />
           <h1 className="hero__titre">Photographe et vidéaste de mariage</h1>
-          <p className="hero__sous">Du Hainaut au Nord de la France, et partout où vous m'emmènerez.</p>
+          <p className="hero__sous">Dans toute la Belgique et le Nord de la France, et partout où vous m'emmènerez.</p>
           <div className="hero__actions">
             <Link href="/mariages/" className="btn btn--clair">
               Voir les mariages
@@ -79,15 +81,23 @@ export default function Accueil() {
       <section className="section" id="approche" aria-labelledby="titre-approche">
         <div className="conteneur apropos">
           <div className="apropos__visuel">
-            <Photo image={grande} alt="" className="apropos__grande" sizes="(min-width: 1000px) 36vw, 100vw" />
-            <Photo image={petite} alt="" className="apropos__petite" sizes="(min-width: 1000px) 20vw, 54vw" />
+            <div data-apparition="photo">
+              <Photo image={grande} alt="" className="apropos__grande" sizes="(min-width: 1000px) 36vw, 100vw" />
+            </div>
+            <Photo
+              image={petite}
+              alt=""
+              className="apropos__petite"
+              sizes="(min-width: 1000px) 20vw, 54vw"
+              data-apparition="fondu"
+            />
           </div>
           <div className="apropos__texte">
             <h2 id="titre-approche">Vous vivez votre journée. Je m'occupe du reste.</h2>
             <div className="texte">
               <p>
-                Je m'appelle Hugo Gillard. Je photographie et je filme des mariages en Belgique et dans le Nord de la
-                France, des préparatifs jusqu'à la pièce montée.
+                Je m'appelle Hugo Gillard. Je photographie et je filme des mariages partout en Belgique et dans le Nord
+                de la France, des préparatifs jusqu'à la pièce montée.
               </p>
               <p>
                 Le jour J, je reste en retrait. Je photographie ce qui se passe, et je ne vous emprunte que le temps de
@@ -95,7 +105,7 @@ export default function Accueil() {
               </p>
             </div>
             <Link href="/#prestations" className="lien">
-              Découvrir les prestations
+              Voir les formules
             </Link>
           </div>
         </div>
@@ -149,35 +159,15 @@ export default function Accueil() {
       </section>
 
       <section className="section section--creme2" id="prestations" aria-labelledby="titre-prestations">
-        <div className="conteneur prestations">
-          <div className="prestations__tete">
-            <h2 id="titre-prestations">Photo, film, ou les deux</h2>
+        <div className="conteneur">
+          <div className="tete-section">
+            <h2 id="titre-prestations">Les formules</h2>
             <p className="chapo">
-              Je couvre la journée des préparatifs jusqu'à la pièce montée. Le tarif dépend de la formule et du lieu.
+              Chacune couvre votre journée, des préparatifs jusqu'à la pièce montée. Le tarif dépend de la formule, de la
+              date et du lieu : envoyez-moi les vôtres, je vous réponds {site.delaiReponse}.
             </p>
-            <Link href="/#contact" className="btn">
-              Vérifier ma date
-            </Link>
           </div>
-          <ul className="formules">
-            {prestations.map((p) => (
-              <li key={p.nom} className="formule">
-                <h3 className="formule__nom">{p.nom}</h3>
-                <div className="formule__detail">
-                  <p>{p.description}</p>
-                  <ul className="formule__inclus">
-                    {p.inclus.map((x) => (
-                      <li key={x}>{x}</li>
-                    ))}
-                  </ul>
-                </div>
-                <p className="formule__prix">
-                  <span>{p.prix ? 'À partir de' : 'Tarif'}</span>
-                  {p.prix ?? 'Sur demande'}
-                </p>
-              </li>
-            ))}
-          </ul>
+          <Prestations formules={formules} />
         </div>
       </section>
 

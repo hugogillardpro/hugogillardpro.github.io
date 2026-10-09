@@ -92,7 +92,7 @@ export default function Gallery({ chapitres }: { chapitres: Chapitre[] }) {
                   {r.photos.map((p) => {
                     const i = n++;
                     return (
-                      <figure key={p.image.id}>
+                      <figure key={p.image.id} data-apparition="photo">
                         <button
                           type="button"
                           className="photo-bouton"

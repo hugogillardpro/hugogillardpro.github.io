@@ -19,7 +19,7 @@ export default function Film({
 }) {
   const [actif, setActif] = useState(false);
   return (
-    <div className="film__cadre">
+    <div className="film__cadre" data-apparition="photo">
       {actif ? (
         <iframe
           src={`https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`}

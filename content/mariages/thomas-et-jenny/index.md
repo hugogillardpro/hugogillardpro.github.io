@@ -39,12 +39,21 @@ photos:
   - src: ./thomas-jenny-sortie-de-la-chapelle.jpg
     chapitre: "La cérémonie"
     alt: "Thomas et Jenny descendent un chemin dallé entourés des invités, une chapelle blanche derrière eux"
+  - src: ./thomas-jenny-sentier-vers-la-mer.jpg
+    chapitre: "Les photos de couple"
+    alt: "Thomas et Jenny descendent un sentier entre les arbustes, la mer et une île en arrière-plan"
   - src: ./thomas-jenny-baiser-sur-le-front-bord-de-mer.jpg
     chapitre: "Les photos de couple"
     alt: "Thomas embrasse Jenny sur le front au bord de la mer, sur une plage de galets"
+  - src: ./thomas-jenny-coeur-bord-de-mer.jpg
+    chapitre: "Les photos de couple"
+    alt: "Thomas et Jenny forment un cœur avec leurs mains au bord de la mer, une jetée et des collines en arrière-plan"
   - src: ./thomas-jenny-etreinte-sur-la-plage.jpg
     chapitre: "Les photos de couple"
     alt: "Thomas soulève Jenny dans ses bras sur une plage de galets, face à la mer"
+  - src: ./thomas-jenny-etreinte-noir-blanc.jpg
+    chapitre: "Les photos de couple"
+    alt: "En noir et blanc, Thomas prend le visage de Jenny entre ses mains sur la plage de galets, face à la mer"
   - src: ./thomas-jenny-danse-en-ronde-bougainvilliers.jpg
     chapitre: "Le vin d'honneur"
     alt: "Jenny danse en ronde avec les invités sur une terrasse dallée, devant un mur de bougainvilliers"
