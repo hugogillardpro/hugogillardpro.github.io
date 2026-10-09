@@ -4,6 +4,7 @@ import Contact from '@/components/Contact';
 import Couple from '@/components/Couple';
 import Film from '@/components/Film';
 import HeroVideo from '@/components/HeroVideo';
+import { Sceau } from '@/components/Brand';
 import JsonLd from '@/components/JsonLd';
 import Photo from '@/components/Photo';
 import Reveal from '@/components/Reveal';
@@ -59,14 +60,9 @@ export default function Accueil() {
           alt={`Extrait du film du mariage ${de(accueil.video.couple)}`}
         />
         <div className="conteneur hero__contenu">
-          <h1 className="hero__titre">
-            <small>Photographe &amp; vidéaste de mariage</small>
-            Hugo Gillard
-          </h1>
-          <p className="hero__sous">
-            Des mariages racontés en photo et en film, du Hainaut au Nord de la France, et partout où vous
-            m'emmènerez.
-          </p>
+          <Sceau className="hero__sceau" texte="var(--nuit-texte)" or="var(--or-clair)" />
+          <h1 className="hero__titre">Photographe et vidéaste de mariage</h1>
+          <p className="hero__sous">Du Hainaut au Nord de la France, et partout où vous m'emmènerez.</p>
           <div className="hero__actions">
             <Link href="/mariages/" className="btn btn--clair">
               Voir les mariages
@@ -79,17 +75,15 @@ export default function Accueil() {
         <p className="hero__legende">
           Film : <Link href={`/mariages/${accueil.video.mariage}/`}>{accueil.video.couple}</Link>
         </p>
-        <span className="hero__defile" aria-hidden="true" />
       </section>
 
       <section className="section" id="approche" aria-labelledby="titre-approche">
         <div className="conteneur apropos">
-          <Reveal className="apropos__visuel">
+          <div className="apropos__visuel">
             <Photo image={grande} alt="" className="apropos__grande" sizes="(min-width: 1000px) 36vw, 100vw" />
             <Photo image={petite} alt="" className="apropos__petite" sizes="(min-width: 1000px) 20vw, 54vw" />
-          </Reveal>
-          <Reveal className="apropos__texte" delay={1}>
-            <p className="sur-titre">Mon approche</p>
+          </div>
+          <div className="apropos__texte">
             <h2 id="titre-approche">Vous vivez votre journée. Je m'occupe du reste.</h2>
             <div className="texte">
               <p>
@@ -101,38 +95,21 @@ export default function Accueil() {
                 quelques portraits. Le film reprend la journée sur une musique que nous choisissons ensemble.
               </p>
             </div>
-            <dl className="chiffres">
-              <div>
-                <dt>≈ 700</dt>
-                <dd>photos retouchées</dd>
-              </div>
-              <div>
-                <dt>10 min</dt>
-                <dd>de film, et un teaser</dd>
-              </div>
-              <div>
-                <dt>3 à 5 mois</dt>
-                <dd>pour recevoir les photos</dd>
-              </div>
-            </dl>
             <Link href="/#prestations" className="lien">
               Découvrir les prestations
             </Link>
-          </Reveal>
+          </div>
         </div>
       </section>
 
       <section className="section section--serre" id="mariages" aria-labelledby="titre-mariages">
         <div className="conteneur">
-          <Reveal className="tete-section tete-section--ligne">
-            <div>
-              <p className="sur-titre">Portfolio</p>
-              <h2 id="titre-mariages">Des mariages, racontés dans l'ordre de la journée</h2>
-            </div>
+          <div className="tete-section tete-section--ligne">
+            <h2 id="titre-mariages">Des mariages, racontés dans l'ordre de la journée</h2>
             <Link href="/mariages/" className="lien">
               Tous les mariages
             </Link>
-          </Reveal>
+          </div>
           <div className="grille-mariages">
             {recents.map((m, i) => (
               <Reveal key={m.slug} className={i === 0 ? 'large' : ''} delay={(i % 3) as 0 | 1 | 2}>
@@ -145,19 +122,16 @@ export default function Accueil() {
 
       <section className="section section--nuit" id="films" aria-labelledby="titre-films">
         <div className="conteneur">
-          <Reveal className="tete-section tete-section--ligne">
-            <div>
-              <p className="sur-titre">Films</p>
-              <h2 id="titre-films">Le film de votre mariage</h2>
-            </div>
+          <div className="tete-section">
+            <h2 id="titre-films">Le film de votre mariage</h2>
             <p className="chapo chapo--nuit">
               Les teasers de quatre mariages. Le film complet dure une dizaine de minutes, sur une musique que nous
               choisissons ensemble.
             </p>
-          </Reveal>
+          </div>
           <div className="films">
-            {films.map((f, i) => (
-              <Reveal key={f.id} className="film" delay={(i % 2) as 0 | 1}>
+            {films.map((f) => (
+              <div key={f.id} className="film">
                 <Film id={f.id} titre={`Teaser du mariage ${de(f.couple)}`} vignette={vignettes.get(f.id)!} />
                 <p className="film__titre">
                   {f.mariage ? (
@@ -168,44 +142,43 @@ export default function Accueil() {
                     <Couple nom={f.couple} />
                   )}
                 </p>
-                <p className="film__sous">Teaser · 30 secondes</p>
-              </Reveal>
+                <p className="film__sous">Teaser de 30 secondes</p>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
       <section className="section section--creme2" id="prestations" aria-labelledby="titre-prestations">
-        <div className="conteneur">
-          <Reveal className="tete-section tete-section--centre">
-            <p className="sur-titre sur-titre--centre">Prestations</p>
+        <div className="conteneur prestations">
+          <div className="prestations__tete">
             <h2 id="titre-prestations">Photo, film, ou les deux</h2>
             <p className="chapo">
               Je couvre la journée des préparatifs jusqu'à la pièce montée. Le tarif dépend de la formule et du lieu.
             </p>
-          </Reveal>
-          <div className="prestations">
-            {prestations.map((p, i) => (
-              <Reveal key={p.nom} className="prestation" delay={i as 0 | 1 | 2}>
-                <h3>{p.nom}</h3>
-                <p className="prestation__desc">{p.description}</p>
-                <ul>
-                  {p.inclus.map((x) => (
-                    <li key={x}>{x}</li>
-                  ))}
-                </ul>
-                <p className="prestation__prix">
-                  <span>{p.prix ? 'À partir de' : 'Tarif'}</span>
-                  <b>{p.prix ?? 'Sur demande'}</b>
-                </p>
-              </Reveal>
-            ))}
-          </div>
-          <p className="prestations__note">
             <Link href="/#contact" className="btn">
-              Demander un devis
+              Vérifier ma date
             </Link>
-          </p>
+          </div>
+          <ul className="formules">
+            {prestations.map((p) => (
+              <li key={p.nom} className="formule">
+                <h3 className="formule__nom">{p.nom}</h3>
+                <div className="formule__detail">
+                  <p>{p.description}</p>
+                  <ul className="formule__inclus">
+                    {p.inclus.map((x) => (
+                      <li key={x}>{x}</li>
+                    ))}
+                  </ul>
+                </div>
+                <p className="formule__prix">
+                  <span>{p.prix ? 'À partir de' : 'Tarif'}</span>
+                  {p.prix ?? 'Sur demande'}
+                </p>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 

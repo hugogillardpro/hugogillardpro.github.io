@@ -12,7 +12,6 @@ export default function Confidentialite() {
   return (
     <div className="page-interieure">
       <article className="conteneur page-texte">
-        <p className="sur-titre">Vie privée</p>
         <h1>Confidentialité et cookies</h1>
         <div className="prose">
           <h2>Qui est responsable</h2>

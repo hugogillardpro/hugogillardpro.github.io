@@ -2,27 +2,33 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { Logotype } from './Brand';
 
-const liens = [
+const gauche = [
   { href: '/mariages/', label: 'Mariages' },
   { href: '/#films', label: 'Films' },
+];
+const droite = [
   { href: '/#prestations', label: 'Prestations' },
   { href: '/#contact', label: 'Contact' },
 ];
 
 export default function Header() {
   const pathname = usePathname() ?? '/';
-  // Transparent au-dessus des pages qui s'ouvrent sur une grande photo.
+  // Transparent au-dessus des pages qui s'ouvrent sur une grande photo ou la vidéo.
   const transparent = pathname === '/' || /^\/mariages\/[^/]+\/?$/.test(pathname);
+  const sentinelle = useRef<HTMLDivElement>(null);
   const [defile, setDefile] = useState(false);
   const [ouvert, setOuvert] = useState(false);
 
+  // L'en-tête devient opaque dès que le haut de page sort de l'écran.
   useEffect(() => {
-    const lire = () => setDefile(window.scrollY > 40);
-    lire();
-    window.addEventListener('scroll', lire, { passive: true });
-    return () => window.removeEventListener('scroll', lire);
+    const el = sentinelle.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([e]) => setDefile(!e.isIntersecting));
+    io.observe(el);
+    return () => io.disconnect();
   }, []);
 
   useEffect(() => {
@@ -44,32 +50,24 @@ export default function Header() {
 
   const solide = !transparent || defile || ouvert;
   const fermer = () => setOuvert(false);
+  const actif = (href: string) => (href === '/mariages/' && pathname.startsWith('/mariages') ? 'page' : undefined);
 
   return (
     <>
+      <div ref={sentinelle} className="sentinelle" aria-hidden="true" />
       <header className={`entete ${solide ? 'entete--solide' : 'entete--transparent'}`}>
         <div className="conteneur entete__barre">
-          <Link href="/" className="marque" aria-label="Hugo Gillard, retour à l'accueil">
-            <span className="marque__nom">Hugo Gillard</span>
-            <span className="marque__sous">Photo &amp; film de mariage</span>
-          </Link>
-          <nav className="nav-principale" aria-label="Navigation principale">
+          <nav className="entete__nav entete__nav--gauche" aria-label="Navigation principale">
             <ul>
-              {liens.map((l) => (
+              {gauche.map((l) => (
                 <li key={l.href}>
-                  <Link
-                    href={l.href}
-                    aria-current={l.href === '/mariages/' && pathname.startsWith('/mariages') ? 'page' : undefined}
-                  >
+                  <Link href={l.href} aria-current={actif(l.href)}>
                     {l.label}
                   </Link>
                 </li>
               ))}
             </ul>
           </nav>
-          <Link href="/#contact" className="btn btn--contour entete__cta">
-            Vérifier ma date
-          </Link>
           <button
             type="button"
             className="bouton-menu"
@@ -79,12 +77,29 @@ export default function Header() {
           >
             {ouvert ? 'Fermer' : 'Menu'}
           </button>
+          <Link href="/" className="entete__marque" aria-label="Hugo Gillard, retour à l'accueil">
+            <Logotype className="entete__logotype" titre="Hugo Gillard" />
+          </Link>
+          <div className="entete__droite">
+            <nav className="entete__nav" aria-label="Navigation secondaire">
+              <ul>
+                {droite.map((l) => (
+                  <li key={l.href}>
+                    <Link href={l.href}>{l.label}</Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+            <Link href="/#contact" className="btn btn--contour entete__cta">
+              Vérifier ma date
+            </Link>
+          </div>
         </div>
       </header>
       <div id="menu-mobile" className="menu-mobile" hidden={!ouvert}>
         <nav aria-label="Menu">
           <ul>
-            {liens.map((l) => (
+            {[...gauche, ...droite].map((l) => (
               <li key={l.href}>
                 <Link href={l.href} onClick={fermer}>
                   {l.label}

@@ -8,8 +8,6 @@ export type PhotoItem = { image: Img; alt: string; chapitre: string };
 type Chapitre = { titre: string; photos: PhotoItem[] };
 type Rangee = { type: 'large' | 'paire' | 'seule'; photos: PhotoItem[] };
 
-const ROMAINS = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII'];
-
 // Une horizontale prend toute la largeur ; deux verticales qui se suivent vont côte à côte.
 function rangees(photos: PhotoItem[]): Rangee[] {
   const out: Rangee[] = [];
@@ -69,13 +67,10 @@ export default function Gallery({ chapitres }: { chapitres: Chapitre[] }) {
   return (
     <>
       <div className="galerie">
-      {chapitres.map((c, ci) => (
+      {chapitres.map((c) => (
         <section key={c.titre} className="chapitre" aria-label={c.titre}>
           <div className="conteneur">
-            <div className="chapitre__tete">
-              <span className="chapitre__num">Chapitre {ROMAINS[ci] ?? ci + 1}</span>
-              <h2>{c.titre}</h2>
-            </div>
+            <h2 className="chapitre__titre">{c.titre}</h2>
             <div className="rangees">
               {rangees(c.photos).map((r, ri) => (
                 <div key={ri} className={`rangee rangee--${r.type}`}>

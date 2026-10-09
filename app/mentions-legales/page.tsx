@@ -19,7 +19,6 @@ export default function MentionsLegales() {
   return (
     <div className="page-interieure">
       <article className="conteneur page-texte">
-        <p className="sur-titre">Informations</p>
         <h1>Mentions légales</h1>
         <div className="prose">
           <h2>Éditeur du site</h2>

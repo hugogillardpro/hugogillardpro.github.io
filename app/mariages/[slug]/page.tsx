@@ -5,7 +5,6 @@ import Film from '@/components/Film';
 import Gallery from '@/components/Gallery';
 import JsonLd from '@/components/JsonLd';
 import Photo from '@/components/Photo';
-import Reveal from '@/components/Reveal';
 import WeddingCard from '@/components/WeddingCard';
 import { chapitres, getMariage, getMariages } from '@/lib/content';
 import { dateLongue, de, lieuTexte } from '@/lib/format';
@@ -84,9 +83,7 @@ export default async function PageMariage({ params }: { params: Promise<Params> 
         </div>
         <div className="conteneur mariage-hero__contenu">
           <p className="fiche">
-            <span>Mariage</span>
-            {m.date && <span>{dateLongue(m.date)}</span>}
-            {lieu && <span>{lieu}</span>}
+            <span>{[m.date ? dateLongue(m.date) : 'Mariage', lieu].filter(Boolean).join(', ')}</span>
             <span>{m.film ? 'Photo & film' : 'Photo'}</span>
           </p>
           <h1 className="mariage-hero__titre">
@@ -105,22 +102,16 @@ export default async function PageMariage({ params }: { params: Promise<Params> 
         </nav>
       </div>
 
-      <Reveal>
-        <div className="conteneur intro-mariage">
-          <p className="sur-titre sur-titre--centre">La journée</p>
-          <p className="chapo">{m.resume}</p>
-        </div>
-      </Reveal>
+      <div className="conteneur intro-mariage">
+        <p className="chapo">{m.resume}</p>
+      </div>
 
       <Gallery chapitres={chapitres(m)} />
 
       {m.film && vignette && (
         <section className="section section--nuit" aria-labelledby="titre-film">
           <div className="conteneur bande-film">
-            <div className="tete-section" style={{ marginBottom: 0 }}>
-              <p className="sur-titre">Le film</p>
-              <h2 id="titre-film">Le teaser du mariage</h2>
-            </div>
+            <h2 id="titre-film">Le film</h2>
             <Film id={m.film} titre={`Teaser du mariage ${de(m.couple)}`} vignette={vignette} sizes="(min-width: 1200px) 1100px, 94vw" />
           </div>
         </section>
@@ -129,9 +120,7 @@ export default async function PageMariage({ params }: { params: Promise<Params> 
       {m.temoignage?.verifie && (
         <section className="section" aria-labelledby="titre-mot">
           <div className="conteneur temoignage">
-            <p className="sur-titre sur-titre--centre" id="titre-mot">
-              Le mot des mariés
-            </p>
+            <h2 id="titre-mot">Le mot des mariés</h2>
             <blockquote>{m.temoignage.texte}</blockquote>
             {m.temoignage.source && <cite>{m.temoignage.source}</cite>}
           </div>
@@ -140,31 +129,25 @@ export default async function PageMariage({ params }: { params: Promise<Params> 
 
       <section className="section section--creme2" aria-labelledby="titre-suite">
         <div className="conteneur">
-          <Reveal className="bande-cta">
-            <p className="sur-titre sur-titre--centre">Et vous ?</p>
+          <div className="bande-cta">
             <h2 id="titre-suite">Vous vous mariez {m.commune ? `à ${m.commune} ou pas loin` : 'bientôt'} ?</h2>
             <p className="texte">Envoyez-moi votre date et le lieu : je vous dis si je suis libre, et on en parle.</p>
             <Link href="/#contact" className="btn">
               Vérifier ma date
             </Link>
-          </Reveal>
+          </div>
 
           {autres.length > 0 && (
             <>
-              <Reveal className="tete-section tete-section--ligne">
-                <div>
-                  <p className="sur-titre">Portfolio</p>
-                  <h2>D'autres mariages</h2>
-                </div>
+              <div className="tete-section tete-section--ligne">
+                <h2>D'autres mariages</h2>
                 <Link href="/mariages/" className="lien">
                   Tous les mariages
                 </Link>
-              </Reveal>
+              </div>
               <div className="grille-trois">
-                {autres.map((x, i) => (
-                  <Reveal key={x.slug} delay={i as 0 | 1 | 2}>
-                    <WeddingCard mariage={x} />
-                  </Reveal>
+                {autres.map((x) => (
+                  <WeddingCard key={x.slug} mariage={x} />
                 ))}
               </div>
             </>
@@ -173,7 +156,7 @@ export default async function PageMariage({ params }: { params: Promise<Params> 
           <nav className="mariage-nav" aria-label="Mariage précédent ou suivant">
             {precedent && (
               <Link href={`/mariages/${precedent.slug}/`}>
-                <span>← Mariage plus récent</span>
+                <span>Mariage plus récent</span>
                 <b>
                   <Couple nom={precedent.couple} />
                 </b>
@@ -181,7 +164,7 @@ export default async function PageMariage({ params }: { params: Promise<Params> 
             )}
             {suivant && (
               <Link href={`/mariages/${suivant.slug}/`}>
-                <span>Mariage plus ancien →</span>
+                <span>Mariage plus ancien</span>
                 <b>
                   <Couple nom={suivant.couple} />
                 </b>

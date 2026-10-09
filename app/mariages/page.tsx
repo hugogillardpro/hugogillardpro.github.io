@@ -28,7 +28,6 @@ export default function PageMariages() {
     <div className="page-interieure">
       <JsonLd data={jsonld} />
       <header className="conteneur tete-page">
-        <p className="sur-titre">Portfolio</p>
         <h1>Mariages</h1>
         <p className="chapo">
           Chaque page suit une journée dans l'ordre, des préparatifs à la soirée. Les photos sont choisies dans le

@@ -1,13 +1,11 @@
 import ContactForm from './ContactForm';
-import Reveal from './Reveal';
 import { site } from '@/lib/site';
 
 export default function Contact() {
   return (
     <section className="section" id="contact" aria-labelledby="titre-contact">
       <div className="conteneur contact">
-        <Reveal className="contact__texte">
-          <p className="sur-titre">Contact</p>
+        <div className="contact__texte">
           <h2 id="titre-contact">Parlons de votre mariage</h2>
           <p className="texte">
             Envoyez-moi votre date et le lieu : je vous dis si je suis libre, et on en parle. Je réponds{' '}
@@ -39,10 +37,10 @@ export default function Contact() {
               <dd>{site.zones}, ailleurs sur demande</dd>
             </div>
           </dl>
-        </Reveal>
-        <Reveal delay={1}>
+        </div>
+        <div>
           <ContactForm />
-        </Reveal>
+        </div>
       </div>
     </section>
   );

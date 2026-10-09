@@ -49,6 +49,10 @@ Les photos s'affichent dans l'ordre de la liste. Deux photos verticales qui se s
 - `content/films.json` : les teasers YouTube de l'accueil.
 - Un témoignage ne s'affiche que si `verifie: true`, une fois sa provenance confirmée (avis Google, message des mariés).
 
+## Logo
+
+Le monogramme, le sceau et le logotype sont dessinés à partir des contours de Playfair Display et de Jost. `public/brand/` contient les fichiers SVG autonomes (versions sombres et `-clair` pour fond foncé) pour l'impression, les réseaux ou une signature d'e-mail. Pour les modifier : `pip install fonttools brotli`, ajuster `scripts/logo.py`, puis `python scripts/logo.py`, qui régénère aussi `lib/brand.ts` et `public/favicon.svg`.
+
 ## Mise en ligne
 
 Le workflow `.github/workflows/deploy.yml` construit et publie le site à chaque push sur `main`.
