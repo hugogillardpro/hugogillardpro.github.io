@@ -5,7 +5,7 @@
     "date": "2026-06-06",
     "lieu": null,
     "mariage": "lionnel-et-linda",
-    "verifie": false,
+    "verifie": true,
     "source": null
   },
   {
@@ -14,7 +14,7 @@
     "date": "2025-06-01",
     "lieu": "Namur",
     "mariage": null,
-    "verifie": false,
+    "verifie": true,
     "source": null
   },
   {
@@ -23,7 +23,7 @@
     "date": "2026-04-12",
     "lieu": "Laon",
     "mariage": null,
-    "verifie": false,
+    "verifie": true,
     "source": null
   },
   {
@@ -32,7 +32,7 @@
     "date": "2026-09-05",
     "lieu": "Charleville-Mézières",
     "mariage": null,
-    "verifie": false,
+    "verifie": true,
     "source": null
   }
 ]
