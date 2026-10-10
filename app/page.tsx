@@ -17,7 +17,7 @@ import { accueil, films, site } from '@/lib/site';
 
 const titre = 'Hugo Gillard, photographe et vidéaste de mariage en Belgique';
 const description =
-  "Reportages photo et films de mariage partout en Belgique, dans le Nord de la France et au-delà. Environ 700 photos retouchées, un teaser et un film d'une dizaine de minutes. Découvrez des mariages complets, dans l'ordre de la journée.";
+  "Reportages photo et films de mariage dans toute la Belgique et toute la France. Environ 700 photos retouchées, un teaser et un film d'une dizaine de minutes. Découvrez des mariages complets, dans l'ordre de la journée.";
 
 export const metadata: Metadata = {
   title: { absolute: titre },
@@ -64,7 +64,7 @@ export default function Accueil() {
         <div className="conteneur hero__contenu">
           <Sceau className="hero__sceau" texte="var(--nuit-texte)" or="var(--or-clair)" trace />
           <h1 className="hero__titre">Photographe et vidéaste de mariage</h1>
-          <p className="hero__sous">Dans toute la Belgique et le Nord de la France, et partout où vous m'emmènerez.</p>
+          <p className="hero__sous">Dans toute la Belgique et toute la France, et partout où vous m'emmènerez.</p>
           <div className="hero__actions">
             <Link href="/mariages/" className="btn btn--clair">
               Voir les mariages
@@ -97,8 +97,8 @@ export default function Accueil() {
             <h2 id="titre-approche">Vous vivez votre journée. Je m'occupe du reste.</h2>
             <div className="texte">
               <p>
-                Je m'appelle Hugo Gillard. Je photographie et je filme des mariages partout en Belgique et dans le Nord
-                de la France, des préparatifs jusqu'à la pièce montée.
+                Je m'appelle Hugo Gillard. Je photographie et je filme des mariages dans toute la Belgique et toute la
+                France, des préparatifs jusqu'à la pièce montée.
               </p>
               <p>
                 Le jour J, je reste en retrait. Je photographie ce qui se passe, et je ne vous emprunte que le temps de

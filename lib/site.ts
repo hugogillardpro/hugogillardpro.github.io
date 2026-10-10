@@ -15,7 +15,7 @@ export const site = {
   instagram: 'https://www.instagram.com/hugogillardpro',
   instagramNom: '@hugogillardpro',
   facebook: 'https://www.facebook.com/hugoglld',
-  zones: 'Toute la Belgique et le Nord de la France',
+  zones: 'Toute la Belgique et toute la France',
   delaiReponse: 'sous 48 heures',
   // Durée de conservation des demandes de contact (page Confidentialité) : à confirmer avec Hugo.
   conservation: "trois ans après notre dernier échange, si aucun contrat n'est signé",

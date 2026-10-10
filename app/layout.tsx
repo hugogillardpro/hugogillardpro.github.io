@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     template: '%s | Hugo Gillard',
   },
   description:
-    'Reportages photo et films de mariage partout en Belgique, dans le Nord de la France et au-delà, par Hugo Gillard.',
+    'Reportages photo et films de mariage dans toute la Belgique et toute la France, et au-delà, par Hugo Gillard.',
   verification: { google: site.googleSiteVerification },
   robots: apercu ? { index: false, follow: false } : undefined,
   icons: { icon: '/favicon.svg' },

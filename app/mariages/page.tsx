@@ -7,7 +7,7 @@ import { site } from '@/lib/site';
 export const metadata: Metadata = {
   title: 'Mariages',
   description:
-    "Les mariages photographiés et filmés par Hugo Gillard, photographe et vidéaste de mariage en Belgique et dans le Nord de la France. Chaque page suit la journée dans l'ordre.",
+    "Les mariages photographiés et filmés par Hugo Gillard, photographe et vidéaste de mariage dans toute la Belgique et toute la France. Chaque page suit la journée dans l'ordre.",
   alternates: { canonical: '/mariages/' },
   openGraph: { title: 'Mariages | Hugo Gillard', url: '/mariages/' },
 };

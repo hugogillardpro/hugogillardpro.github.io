@@ -20,7 +20,7 @@ export function generateStaticParams(): Params[] {
   return [{ zone: [] }, ...getZonesPubliees().map((zn) => ({ zone: [zn.slug] }))];
 }
 
-const TITRE_INDEX = 'Photographe et vidéaste de mariage en Belgique et dans le Nord de la France';
+const TITRE_INDEX = 'Photographe et vidéaste de mariage en Belgique et en France';
 
 export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
   const { zone } = await params;
@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
     return {
       title: 'Photographe de mariage par région',
       description:
-        'Les mariages photographiés et filmés par Hugo Gillard, région par région : Wallonie, Bruxelles et Nord de la France.',
+        'Les mariages photographiés et filmés par Hugo Gillard, région par région, en Belgique et en France.',
       alternates: { canonical: '/photographe-mariage/' },
       robots: vide ? { index: false, follow: true } : undefined,
     };
@@ -70,7 +70,7 @@ function IndexZones({ zones }: { zones: Zone[] }) {
         </nav>
         <h1>{TITRE_INDEX}</h1>
         <p className="chapo">
-          Je photographie et je filme des mariages dans toute la Belgique et le Nord de la France. Voici, région par
+          Je photographie et je filme des mariages dans toute la Belgique et toute la France. Voici, région par
           région, des mariages que j'ai couverts.
         </p>
       </header>
