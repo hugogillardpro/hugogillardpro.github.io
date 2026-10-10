@@ -2111,6 +2111,14 @@ a {
 }
 
 /* ===== Écrans moyens et petits ===== */
+/* Sous 1280 px, le bouton de l'en-tête ne tient plus à côté du logo centré : la navigation reste,
+   et « Vérifier ma date » reste dans l'ouverture, le menu mobile et chaque section. */
+@media (max-width: 1279px) {
+  .entete__cta {
+    display: none;
+  }
+}
+
 @media (max-width: 1000px) {
   .entete__nav,
   .entete__cta {

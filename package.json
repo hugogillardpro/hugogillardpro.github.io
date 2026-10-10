@@ -8,8 +8,9 @@
   "scripts": {
     "images": "node scripts/images.mjs",
     "dev": "node scripts/images.mjs && next dev",
-    "build": "node scripts/images.mjs && next build",
-    "preview": "node scripts/preview.mjs"
+    "build": "node scripts/images.mjs && next build && node scripts/export-plat.mjs",
+    "preview": "node scripts/preview.mjs",
+    "apercu": "node scripts/apercu.mjs"
   },
   "dependencies": {
     "@fontsource-variable/jost": "5.3.0",

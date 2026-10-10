@@ -8,7 +8,7 @@ import Apparitions from '@/components/Apparitions';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Consent from '@/components/Consent';
-import { site } from '@/lib/site';
+import { apercu, site } from '@/lib/site';
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -19,6 +19,7 @@ export const metadata: Metadata = {
   description:
     'Reportages photo et films de mariage partout en Belgique, dans le Nord de la France et au-delà, par Hugo Gillard.',
   verification: { google: site.googleSiteVerification },
+  robots: apercu ? { index: false, follow: false } : undefined,
   icons: { icon: '/favicon.svg' },
   openGraph: { siteName: site.nom, locale: 'fr_BE', type: 'website' },
 };

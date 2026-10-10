@@ -1,5 +1,9 @@
 import filmsJson from '@/content/films.json';
 
+// Version d'aperçu (Vercel), construite avec NEXT_PUBLIC_APERCU=1 : pages masquées aux moteurs,
+// traceur Google Ads coupé et formulaire qui n'envoie rien. Le site publié n'est pas concerné.
+export const apercu = process.env.NEXT_PUBLIC_APERCU === '1';
+
 // Coordonnées et réglages communs à tout le site.
 export const site = {
   nom: 'Hugo Gillard',

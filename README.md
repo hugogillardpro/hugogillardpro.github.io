@@ -59,6 +59,10 @@ Le texte de chaque zone est dans `content/zones/<zone>.md` : `description` pour 
 
 Le monogramme, le sceau et le logotype sont dessinés à partir des contours de Playfair Display et de Jost. `public/brand/` contient les fichiers SVG autonomes (versions sombres et `-clair` pour fond foncé) pour l'impression, les réseaux ou une signature d'e-mail. Pour les modifier : `pip install fonttools brotli`, ajuster `scripts/logo.py`, puis `python scripts/logo.py`, qui régénère aussi `lib/brand.ts` et `public/favicon.svg`.
 
+## Aperçu sur Vercel
+
+`npm run apercu` construit une version d'aperçu et la publie sur https://hugogillard-apercu.vercel.app (projet Vercel séparé : le site en ligne n'est pas touché). Cette version est masquée aux moteurs de recherche, n'a pas de traceur Google Ads et son formulaire n'envoie rien. Il faut être connecté à Vercel (`vercel login`) avec un accès à l'équipe Adista.
+
 ## Mise en ligne
 
 Le workflow `.github/workflows/deploy.yml` construit et publie le site à chaque push sur `main`.

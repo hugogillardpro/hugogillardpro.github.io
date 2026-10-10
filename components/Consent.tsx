@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { site } from '@/lib/site';
+import { apercu, site } from '@/lib/site';
 
 const CLE = 'hg-consentement';
 
@@ -71,6 +71,8 @@ export default function Consent() {
   const [sortie, setSortie] = useState(false);
 
   useEffect(() => {
+    // Aperçu : pas de traceur, donc pas de bandeau.
+    if (apercu) return;
     window.hgConsentement = () => lire() === 'accepte';
     const choix = lire();
     if (choix === 'accepte') chargerGoogleAds();

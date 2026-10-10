@@ -3,7 +3,7 @@
 import { CaretDown } from '@phosphor-icons/react/ssr';
 import Link from 'next/link';
 import { useState, type FormEvent } from 'react';
-import { prestations, site } from '@/lib/site';
+import { apercu, prestations, site } from '@/lib/site';
 
 export default function ContactForm() {
   const [statut, setStatut] = useState('');
@@ -14,6 +14,10 @@ export default function ContactForm() {
     e.preventDefault();
     const form = e.currentTarget;
     if (!form.reportValidity()) return;
+    if (apercu) {
+      setStatut("Version d'aperçu : ce formulaire n'envoie rien. Sur le site final, votre message partira chez Hugo.");
+      return;
+    }
     setEnvoi(true);
     setStatut('Envoi en cours…');
     try {
@@ -47,7 +51,13 @@ export default function ContactForm() {
   }
 
   return (
-    <form className="formulaire" action={site.formspree} method="POST" onSubmit={soumettre} noValidate>
+    <form
+      className="formulaire"
+      action={apercu ? undefined : site.formspree}
+      method="POST"
+      onSubmit={soumettre}
+      noValidate
+    >
       <p className="formulaire__piege" aria-hidden="true">
         <label>
           Ne pas remplir <input name="_gotcha" tabIndex={-1} autoComplete="off" />
