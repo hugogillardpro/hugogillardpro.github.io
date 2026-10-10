@@ -7,12 +7,12 @@ import HeroVideo from '@/components/HeroVideo';
 import { Sceau } from '@/components/Brand';
 import JsonLd from '@/components/JsonLd';
 import Photo from '@/components/Photo';
-import Prestations from '@/components/Prestations';
+import SectionFormules from '@/components/SectionFormules';
 import WeddingCard from '@/components/WeddingCard';
 import { getMariages } from '@/lib/content';
 import { de } from '@/lib/format';
 import { img } from '@/lib/images';
-import { accueil, films, prestations, site } from '@/lib/site';
+import { accueil, films, site } from '@/lib/site';
 
 const titre = 'Hugo Gillard, photographe et vidéaste de mariage en Belgique';
 const description =
@@ -31,7 +31,6 @@ export default function Accueil() {
   const grande = img(accueil.apropos.grande);
   const petite = img(accueil.apropos.petite);
   const vignettes = new Map(films.map((f) => [f.id, img(`/img/films/${f.id}`)]));
-  const formules = prestations.map((p) => ({ ...p, image: img(p.image) }));
 
   const jsonld = {
     '@context': 'https://schema.org',
@@ -159,18 +158,7 @@ export default function Accueil() {
         </div>
       </section>
 
-      <section className="section section--creme2" id="prestations" aria-labelledby="titre-prestations">
-        <div className="conteneur">
-          <div className="tete-section">
-            <h2 id="titre-prestations">Les formules</h2>
-            <p className="chapo">
-              Chacune couvre votre journée, des préparatifs jusqu'à la pièce montée. Le tarif dépend de la formule, de la
-              date et du lieu : envoyez-moi les vôtres, je vous réponds {site.delaiReponse}.
-            </p>
-          </div>
-          <Prestations formules={formules} />
-        </div>
-      </section>
+      <SectionFormules />
 
       <Contact />
     </>

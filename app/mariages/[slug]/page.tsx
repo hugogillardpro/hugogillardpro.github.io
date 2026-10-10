@@ -10,6 +10,7 @@ import { chapitres, getMariage, getMariages } from '@/lib/content';
 import { dateLongue, de, lieuTexte } from '@/lib/format';
 import { img } from '@/lib/images';
 import { site } from '@/lib/site';
+import { getZonesPubliees } from '@/lib/zones';
 
 type Params = { slug: string };
 
@@ -46,6 +47,7 @@ export default async function PageMariage({ params }: { params: Promise<Params> 
   const lieu = lieuTexte(m);
   const vignette = m.film ? img(`/img/films/${m.film}`) : null;
   const url = `${site.url}/mariages/${slug}/`;
+  const zone = getZonesPubliees().find((z) => z.slug === m.zone);
 
   const jsonld = [
     {
@@ -104,6 +106,11 @@ export default async function PageMariage({ params }: { params: Promise<Params> 
 
       <div className="conteneur intro-mariage">
         <p className="chapo">{m.resume}</p>
+        {zone && (
+          <Link href={`/photographe-mariage/${zone.slug}/`} className="lien">
+            Mes mariages {zone.dans}
+          </Link>
+        )}
       </div>
 
       <Gallery chapitres={chapitres(m)} />
@@ -130,7 +137,9 @@ export default async function PageMariage({ params }: { params: Promise<Params> 
       <section className="section section--creme2" aria-labelledby="titre-suite">
         <div className="conteneur">
           <div className="bande-cta">
-            <h2 id="titre-suite">Vous vous mariez {m.commune ? `à ${m.commune} ou pas loin` : 'bientôt'} ?</h2>
+            <h2 id="titre-suite">
+              Vous vous mariez {m.commune ? `à ${m.commune} ou pas loin` : zone ? zone.dans : 'bientôt'} ?
+            </h2>
             <p className="texte">Envoyez-moi votre date et le lieu : je vous dis si je suis libre, et on en parle.</p>
             <Link href="/#contact" className="btn">
               Vérifier ma date

@@ -1378,6 +1378,27 @@ a {
   color: var(--encre-2);
 }
 
+.pied__regions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: baseline;
+  gap: 8px 20px;
+  font-size: 0.92rem;
+  color: var(--encre-2);
+}
+
+.pied__regions ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 20px;
+}
+
+.pied__regions ul a {
+  color: var(--encre);
+}
+
 .pied a,
 .pied button {
   transition: color 200ms ease;
@@ -1856,6 +1877,35 @@ a {
 
 .grille-mariages--page {
   padding-bottom: clamp(72px, 10vw, 150px);
+}
+
+/* ===== Pages locales (/photographe-mariage/<zone>/) ===== */
+.tete-page .ariane {
+  padding-top: 0;
+}
+
+.tete-page--zone h1 {
+  max-width: 20ch;
+  font-size: clamp(2.3rem, 4.6vw, 4rem);
+}
+
+.zone__mariages {
+  display: grid;
+  justify-items: start;
+  gap: clamp(32px, 4vw, 56px);
+  padding-bottom: clamp(72px, 10vw, 150px);
+}
+
+.zone__mariages .grille-mariages {
+  width: 100%;
+}
+
+.zone__titre {
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+}
+
+.zone__texte {
+  max-width: 40rem;
 }
 
 .page-texte {

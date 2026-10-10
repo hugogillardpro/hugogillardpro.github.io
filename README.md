@@ -26,7 +26,7 @@ couple: "Prénom & Prénom"
 date: 2026-09-19              # ou null
 lieu: "Nom de la salle"       # ou null : rien n'est affiché
 commune: "Commune"            # ou null
-zone: belgique                # belgique, france, autre ou null
+zone: hainaut                 # hainaut, bruxelles, brabant-wallon, namur, liege, luxembourg, nord, autre ou null
 film: null                    # identifiant YouTube du teaser, ex. 2l7xX6kgNaI
 publie: true                  # false pour masquer la page
 resume: "Une ou deux phrases sur le déroulé de la journée."
@@ -42,6 +42,12 @@ temoignage: null
 ```
 
 Les photos s'affichent dans l'ordre de la liste. Deux photos verticales qui se suivent sont placées côte à côte, une photo horizontale prend toute la largeur. Chaque fiche est vérifiée au build : s'il manque un champ ou une photo, le build échoue et le site en ligne ne change pas.
+
+## Pages par région
+
+Les pages `/photographe-mariage/<zone>/` (Hainaut, Bruxelles, Brabant wallon, Namur, Liège, Luxembourg, Nord de la France) n'apparaissent que lorsqu'au moins un mariage publié y est rattaché : il suffit d'indiquer `zone: hainaut` (par exemple) dans la fiche du mariage. Tant qu'aucune zone n'a de mariage, aucune page locale n'est publiée, et l'index `/photographe-mariage/` n'est ni indexé ni lié.
+
+Le texte de chaque zone est dans `content/zones/<zone>.md` : `description` pour Google, `intro` sous le titre, et un texte libre facultatif sous les mariages (salles connues, endroits pour les photos de couple). Une page sans mariage réel, avec le même texte d'une ville à l'autre, serait vue par Google comme une page satellite : c'est pour cela que la règle est automatique.
 
 ## Réglages
 

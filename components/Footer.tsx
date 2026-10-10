@@ -3,9 +3,11 @@ import BoutonCookies from './BoutonCookies';
 import { Sceau } from './Brand';
 import Reseaux from './Reseaux';
 import { site } from '@/lib/site';
+import { getZonesPubliees } from '@/lib/zones';
 
 export default function Footer() {
   const annee = new Date().getFullYear();
+  const zones = getZonesPubliees();
   return (
     <footer className="pied">
       <div className="conteneur pied__corps">
@@ -31,6 +33,18 @@ export default function Footer() {
             </li>
           </ul>
         </nav>
+        {zones.length > 0 && (
+          <nav className="pied__regions" aria-label="Photographe de mariage par région">
+            <Link href="/photographe-mariage/">Photographe de mariage</Link>
+            <ul>
+              {zones.map((z) => (
+                <li key={z.slug}>
+                  <Link href={`/photographe-mariage/${z.slug}/`}>{z.nom}</Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        )}
         <ul className="pied__contact">
           <li>
             <a href={`mailto:${site.email}`}>{site.email}</a>

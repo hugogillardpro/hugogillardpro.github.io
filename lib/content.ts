@@ -7,6 +7,12 @@ import { img, type Img } from './images';
 // Un mariage = un dossier dans content/mariages/ avec un index.md et ses photos.
 const DOSSIER = path.join(process.cwd(), 'content', 'mariages');
 
+// Valeurs permises pour `zone` : le nom d'un fichier de content/zones/, ou « autre ».
+const ZONES = fs
+  .readdirSync(path.join(process.cwd(), 'content', 'zones'))
+  .filter((f) => f.endsWith('.md'))
+  .map((f) => f.replace(/\.md$/, ''));
+
 const schema = z.object({
   slug: z.string().regex(/^[a-z0-9-]+$/),
   couple: z.string(),
@@ -14,7 +20,13 @@ const schema = z.object({
   // À compléter avec Hugo : rien n'est affiché tant que la valeur est vide.
   lieu: z.string().nullable().default(null),
   commune: z.string().nullable().default(null),
-  zone: z.enum(['belgique', 'france', 'autre']).nullable().default(null),
+  zone: z
+    .string()
+    .nullable()
+    .default(null)
+    .refine((v) => v === null || v === 'autre' || ZONES.includes(v), {
+      message: `zone inconnue : choisir ${[...ZONES, 'autre'].join(', ')} ou null`,
+    }),
   film: z.string().nullable().default(null),
   publie: z.boolean().default(true),
   resume: z.string(),
@@ -37,7 +49,8 @@ export type Mariage = {
   date: Date | null;
   lieu: string | null;
   commune: string | null;
-  zone: 'belgique' | 'france' | 'autre' | null;
+  // Slug d'une zone (content/zones/), « autre » ou null : relie le mariage à sa page locale.
+  zone: string | null;
   film: string | null;
   resume: string;
   hero: Img;
