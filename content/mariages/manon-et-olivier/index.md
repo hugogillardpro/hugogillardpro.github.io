@@ -4,7 +4,7 @@ couple: "Manon & Olivier"
 date: 2026-08-22
 lieu: null
 commune: null
-zone: null
+zone: nord
 film: null
 publie: true
 resume: "Les préparatifs des deux mariés, une cérémonie sous un hangar décoré d'une arche fleurie, des portraits dans un parc et près d'une voiture ancienne, puis le repas et la première danse dans une salle à colombages."

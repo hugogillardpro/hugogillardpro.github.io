@@ -4,7 +4,7 @@ couple: "Laura & Alexis"
 date: 2026-09-04
 lieu: null
 commune: null
-zone: null
+zone: hainaut
 film: "2l7xX6kgNaI"
 publie: true
 resume: "Une voiture ancienne et son chauffeur, un moment officiel dans une pièce vitrée, puis des portraits dans le parc d'une grande demeure blanche."

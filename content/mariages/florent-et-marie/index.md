@@ -4,7 +4,7 @@ couple: "Florent & Marie"
 date: 2026-07-04
 lieu: null
 commune: null
-zone: null
+zone: hainaut
 film: null
 publie: true
 resume: "Les préparatifs de Marie dans un jardin, le mariage civil dans une salle ancienne au plafond peint et la sortie sous le riz. La fête continue dans un lieu moderne : portraits, apéritif sur un toit-terrasse, buffet et repas."

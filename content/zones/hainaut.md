@@ -5,7 +5,7 @@ dans: "dans le Hainaut"
 officiel: "Province de Hainaut"
 ordre: 1
 description: "Photographe et vidéaste de mariage dans le Hainaut : reportages photo et films de mariage à Mons, Charleroi, Tournai, La Louvière et dans toute la province."
-intro: "Je photographie et je filme des mariages dans tout le Hainaut, de Tournai à Charleroi et de Mons à Chimay : les préparatifs, la cérémonie à la maison communale ou à l'église, la réception et la soirée."
+intro: "Je photographie et je filme des mariages dans tout le Hainaut, de Tournai à Charleroi et de Mons à La Louvière : les préparatifs, la cérémonie à la maison communale ou à l'église, la réception et la soirée."
 ---
 
 <!-- Texte facultatif, affiché sous les mariages de la zone : quelques lignes d'Hugo sur la région

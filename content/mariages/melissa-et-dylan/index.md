@@ -4,7 +4,7 @@ couple: "Melissa & Dylan"
 date: 2025-05-03
 lieu: null
 commune: null
-zone: null
+zone: hainaut
 film: null
 publie: true
 resume: "Les préparatifs dans deux maisons, le mariage civil dans une salle communale aux murs de briques, puis la cérémonie religieuse dans une grande église. Portraits dans un parc et avec une décapotable ancienne, vin d'honneur, puis soirée dansante dans la salle de réception."

@@ -4,6 +4,8 @@
 // - pour chaque film YouTube : sa vignette (téléchargée une fois dans content/films/).
 // Un manifeste (public/img/manifest.json) donne dimensions et flou à next/image.
 // Le travail déjà fait est réutilisé : une photo inchangée n'est pas recalculée.
+// Ce qui ne correspond plus à rien dans content/ est supprimé de public/img/ : un mariage ou une
+// photo retirés ne laissent aucune trace dans le site publié.
 import { createHash } from 'node:crypto';
 import fs from 'node:fs/promises';
 import os from 'node:os';
@@ -21,6 +23,7 @@ const debut = Date.now();
 const ancien = await lireJson(MANIFESTE, {});
 const manifeste = {};
 const taches = [];
+const produits = new Set([MANIFESTE]);
 
 async function existe(p) {
   try {
@@ -93,6 +96,7 @@ async function traiter(t) {
 
   if (t.og) {
     const sortie = `${base}.jpg`;
+    produits.add(sortie);
     const aJour = ancien[t.id]?.hash === hash && (await existe(sortie));
     if (!aJour) {
       await sharp(donnees)
@@ -112,6 +116,7 @@ async function traiter(t) {
   const height = tourne ? meta.width : meta.height;
   const tailles = [...LARGEURS.filter((w) => w < width), width];
   const fichiers = tailles.map((w) => `${base}-${w}.webp`);
+  for (const f of fichiers) produits.add(f);
   const aJour =
     ancien[t.id]?.hash === hash && ancien[t.id]?.blur && (await Promise.all(fichiers.map(existe))).every(Boolean);
 
@@ -149,8 +154,23 @@ await Promise.all(
   }),
 );
 
+// 4. Ménage : fichiers orphelins, puis dossiers vides.
+let supprimes = 0;
+for (const f of await fs.readdir(SORTIE, { recursive: true, withFileTypes: true })) {
+  if (!f.isFile()) continue;
+  const chemin = path.join(f.parentPath, f.name);
+  if (!produits.has(chemin)) {
+    await fs.rm(chemin);
+    supprimes++;
+  }
+}
+for (const d of (await fs.readdir(SORTIE, { withFileTypes: true })).filter((x) => x.isDirectory())) {
+  const dossier = path.join(SORTIE, d.name);
+  if ((await fs.readdir(dossier)).length === 0) await fs.rmdir(dossier);
+}
+
 const trie = Object.fromEntries(Object.keys(manifeste).sort().map((k) => [k, manifeste[k]]));
 await fs.writeFile(MANIFESTE, JSON.stringify(trie));
 console.log(
-  `images : ${taches.length} entrées, ${regenerees} régénérées, ${((Date.now() - debut) / 1000).toFixed(1)} s`,
+  `images : ${taches.length} entrées, ${regenerees} régénérées, ${supprimes} supprimées, ${((Date.now() - debut) / 1000).toFixed(1)} s`,
 );

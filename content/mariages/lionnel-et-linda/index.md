@@ -4,7 +4,7 @@ couple: "Lionnel & Linda"
 date: 2026-06-06
 lieu: null
 commune: null
-zone: null
+zone: hainaut
 film: null
 publie: true
 resume: "Les préparatifs dans un intérieur lumineux, le mariage civil dans la salle boisée d'un bâtiment ancien, puis une cérémonie laïque. Vin d'honneur, portraits au jardin et soirée dansante dans une grange à charpente apparente."

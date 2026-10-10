@@ -4,7 +4,7 @@ couple: "Sophie & Quentin"
 date: 2026-09-19
 lieu: null
 commune: null
-zone: null
+zone: nord
 film: null
 publie: true
 resume: "Les préparatifs dans une demeure en pierre, la cérémonie religieuse dans une grande église gothique, puis l'arrivée en décapotable ancienne et des portraits dans le parc. Lancer du bouquet dans la cour, puis soirée dansante et gâteau sous les étincelles."
