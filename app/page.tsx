@@ -57,6 +57,7 @@ export default function Accueil() {
       <section className="hero" aria-label="Présentation">
         <HeroVideo
           src={accueil.video.src}
+          srcVertical={accueil.video.srcVertical}
           affiche={img(accueil.video.affiche)}
           alt={`Extrait du film du mariage ${de(accueil.video.couple)}`}
         />
