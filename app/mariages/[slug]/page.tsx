@@ -9,6 +9,7 @@ import WeddingCard from '@/components/WeddingCard';
 import { chapitres, getMariage, getMariages } from '@/lib/content';
 import { dateLongue, de, lieuTexte } from '@/lib/format';
 import { img } from '@/lib/images';
+import { getAvisMariage } from '@/lib/avis';
 import { site } from '@/lib/site';
 import { getZonesPubliees } from '@/lib/zones';
 
@@ -48,6 +49,7 @@ export default async function PageMariage({ params }: { params: Promise<Params> 
   const vignette = m.film ? img(`/img/films/${m.film}`) : null;
   const url = `${site.url}/mariages/${slug}/`;
   const zone = getZonesPubliees().find((z) => z.slug === m.zone);
+  const avis = getAvisMariage(slug);
 
   const jsonld = [
     {
@@ -124,12 +126,12 @@ export default async function PageMariage({ params }: { params: Promise<Params> 
         </section>
       )}
 
-      {m.temoignage?.verifie && (
+      {avis && (
         <section className="section" aria-labelledby="titre-mot">
           <div className="conteneur temoignage">
             <h2 id="titre-mot">Le mot des mariés</h2>
-            <blockquote>{m.temoignage.texte}</blockquote>
-            {m.temoignage.source && <cite>{m.temoignage.source}</cite>}
+            <blockquote>{avis.texte}</blockquote>
+            {avis.source && <cite>{avis.source}</cite>}
           </div>
         </section>
       )}

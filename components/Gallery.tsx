@@ -41,6 +41,15 @@ export default function Gallery({ chapitres }: { chapitres: Chapitre[] }) {
   const dialog = useRef<HTMLDialogElement>(null);
   const toucheX = useRef<number | null>(null);
 
+  // Fermeture par Échap ou par le navigateur : écoutée directement sur l'élément.
+  useEffect(() => {
+    const d = dialog.current;
+    if (!d) return;
+    const surFermeture = () => setIndex(null);
+    d.addEventListener('close', surFermeture);
+    return () => d.removeEventListener('close', surFermeture);
+  }, []);
+
   const ouvrir = (i: number) => {
     setEntree('ouverture');
     setIndex(i);
@@ -112,7 +121,7 @@ export default function Gallery({ chapitres }: { chapitres: Chapitre[] }) {
       ))}
       </div>
 
-      <dialog ref={dialog} className="visionneuse" onClose={() => setIndex(null)} aria-label="Photo en grand">
+      <dialog ref={dialog} className="visionneuse" aria-label="Photo en grand">
         {actuelle && index !== null && (
           <div
             className="visionneuse__corps"

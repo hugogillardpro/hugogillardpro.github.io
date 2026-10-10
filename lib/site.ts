@@ -45,6 +45,8 @@ export type Prestation = {
   note: string | null;
   image: string;
   alt: string;
+  // « Voir un exemple » : un teaser YouTube (repris de l'ancien site) ou la page d'un mariage.
+  exemple: { film: string; couple: string } | { mariage: string; couple: string } | null;
 };
 
 export const prestations: Prestation[] = [
@@ -57,6 +59,7 @@ export const prestations: Prestation[] = [
     note: null,
     image: '/img/sophie-et-quentin/sophie-quentin-sous-le-voile',
     alt: "Sophie et Quentin sous le voile, dans la nef d'une église gothique, en noir et blanc",
+    exemple: { mariage: 'sophie-et-quentin', couple: 'Sophie & Quentin' },
   },
   {
     nom: 'Film de mariage',
@@ -67,6 +70,7 @@ export const prestations: Prestation[] = [
     note: null,
     image: '/img/films/ofZSioZLUv4',
     alt: "Image du film d'Elodie et Cédric : les mariés enlacés devant une grange, au soleil couchant",
+    exemple: { film: 'ofZSioZLUv4', couple: 'Elodie & Cédric' },
   },
   {
     nom: 'Photo et film',
@@ -76,6 +80,7 @@ export const prestations: Prestation[] = [
     note: 'La plus complète',
     image: '/img/laura-et-alexis/laura-alexis-portee-baiser',
     alt: "Alexis porte Laura et l'embrasse, sa robe virevoltant devant une grande demeure blanche",
+    exemple: { film: '2l7xX6kgNaI', couple: 'Laura & Alexis' },
   },
 ];
 

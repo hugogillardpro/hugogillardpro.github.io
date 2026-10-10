@@ -34,15 +34,9 @@ const schema = z.object({
   heroAlt: z.string(),
   couverture: z.string(),
   photos: z.array(z.object({ src: z.string(), chapitre: z.string(), alt: z.string() })).min(1),
-  // Un avis ne s'affiche que s'il est vérifié (art. VI.100 du Code de droit économique).
-  temoignage: z
-    .object({ texte: z.string(), verifie: z.boolean(), source: z.string().nullable() })
-    .nullable()
-    .default(null),
 });
 
 export type PhotoMariage = { image: Img; alt: string; chapitre: string };
-export type Temoignage = { texte: string; verifie: boolean; source: string | null };
 export type Mariage = {
   slug: string;
   couple: string;
@@ -57,7 +51,6 @@ export type Mariage = {
   heroAlt: string;
   couverture: Img;
   photos: PhotoMariage[];
-  temoignage: Temoignage | null;
   og: string;
 };
 
@@ -97,7 +90,6 @@ export function getMariages(): Mariage[] {
       heroAlt: b.heroAlt,
       couverture: ref(b.slug, b.couverture),
       photos: b.photos.map((p) => ({ image: ref(b.slug, p.src), alt: p.alt, chapitre: p.chapitre })),
-      temoignage: b.temoignage,
       og: `/img/${b.slug}/og.jpg`,
     });
   }

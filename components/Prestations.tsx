@@ -1,8 +1,11 @@
 'use client';
 
+import { Play } from '@phosphor-icons/react/ssr';
 import Link from 'next/link';
 import { useLayoutEffect, useRef, useState } from 'react';
+import Lecteur, { type FilmOuvert } from './Lecteur';
 import Photo from './Photo';
+import { de } from '@/lib/format';
 import type { Img } from '@/lib/images';
 import type { Prestation } from '@/lib/site';
 
@@ -12,6 +15,7 @@ export type Formule = Omit<Prestation, 'image'> & { image: Img };
 // survolée (ou touchée) et un repère doré glisse jusqu'à elle. Sur mobile, chaque formule a sa photo.
 export default function Prestations({ formules }: { formules: Formule[] }) {
   const [actif, setActif] = useState(0);
+  const [film, setFilm] = useState<FilmOuvert | null>(null);
   const liste = useRef<HTMLOListElement>(null);
   const repere = useRef<HTMLSpanElement>(null);
 
@@ -75,6 +79,29 @@ export default function Prestations({ formules }: { formules: Formule[] }) {
                   ))}
                 </ul>
                 {f.prix && <p className="formule__prix">À partir de {f.prix}</p>}
+                {f.exemple && 'film' in f.exemple && (
+                  <button
+                    type="button"
+                    className="lien formule__exemple"
+                    aria-label={`Voir un exemple : le teaser du mariage ${de(f.exemple.couple)}`}
+                    onClick={() => {
+                      if (f.exemple && 'film' in f.exemple)
+                        setFilm({ id: f.exemple.film, titre: `Teaser du mariage ${de(f.exemple.couple)}` });
+                    }}
+                  >
+                    <Play size={12} weight="fill" aria-hidden="true" />
+                    Voir un exemple
+                  </button>
+                )}
+                {f.exemple && 'mariage' in f.exemple && (
+                  <Link
+                    href={`/mariages/${f.exemple.mariage}/`}
+                    className="lien formule__exemple"
+                    aria-label={`Voir un exemple : le reportage du mariage ${de(f.exemple.couple)}`}
+                  >
+                    Voir un exemple
+                  </Link>
+                )}
               </li>
             ))}
           </ol>
@@ -83,6 +110,7 @@ export default function Prestations({ formules }: { formules: Formule[] }) {
           Vérifier ma date
         </Link>
       </div>
+      <Lecteur film={film} onFermer={() => setFilm(null)} />
     </div>
   );
 }

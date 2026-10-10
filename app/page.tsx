@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import Avis from '@/components/Avis';
 import Contact from '@/components/Contact';
 import Couple from '@/components/Couple';
 import Film from '@/components/Film';
@@ -159,6 +160,7 @@ export default function Accueil() {
       </section>
 
       <SectionFormules />
+      <Avis />
 
       <Contact />
     </>

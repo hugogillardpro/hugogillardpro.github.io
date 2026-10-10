@@ -1125,6 +1125,74 @@ a {
   font-size: 1.2rem;
 }
 
+.formule__exemple {
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+button.formule__exemple {
+  background: none;
+  border: 0;
+  border-bottom: 1px solid var(--or);
+  padding: 0 0 6px;
+  font-family: var(--sans);
+  color: var(--encre);
+  cursor: pointer;
+}
+
+.formule__exemple svg {
+  color: var(--or-texte);
+}
+
+/* ===== Lecteur de film (exemples des formules) ===== */
+.lecteur {
+  width: 100vw;
+  height: 100vh;
+  max-width: 100vw;
+  max-height: 100vh;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.lecteur::backdrop {
+  background: rgba(22, 18, 15, 0.94);
+}
+
+.lecteur[open],
+.lecteur[open]::backdrop {
+  animation: fondu 250ms var(--ease-out);
+}
+
+.lecteur__corps {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 80px clamp(16px, 5vw, 88px);
+}
+
+.lecteur__cadre {
+  position: relative;
+  width: min(100%, 1100px, calc((100vh - 160px) * 16 / 9));
+  aspect-ratio: 16 / 9;
+  background: #000;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+  animation: photo-ouverture 250ms var(--ease-out);
+}
+
+.lecteur__cadre iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
 /* ===== Contact ===== */
 .contact {
   display: grid;
@@ -1627,6 +1695,67 @@ a {
   max-width: 1120px;
 }
 
+/* ===== Avis (accueil) ===== */
+.avis {
+  border-top: 1px solid var(--filet-or);
+}
+
+.avis__liste {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(40px, 5vw, 72px) clamp(32px, 5vw, 80px);
+}
+
+/* Trois colonnes quand les avis remplissent des rangées de trois, sinon deux : pas d'avis orphelin. */
+.avis__liste[data-colonnes='3'] {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+@media (max-width: 860px) {
+  .avis__liste,
+  .avis__liste[data-colonnes='3'] {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.avis__item {
+  display: grid;
+  align-content: start;
+  justify-items: start;
+  gap: 14px;
+}
+
+.avis__texte {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: clamp(1.2rem, 1.7vw, 1.45rem);
+  line-height: 1.55;
+}
+
+.avis__texte::before {
+  content: '«';
+  display: block;
+  font-size: 2.6rem;
+  line-height: 1;
+  color: var(--or);
+  margin-bottom: 6px;
+}
+
+.avis__couple {
+  font-family: var(--serif);
+  font-size: 1.25rem;
+}
+
+.avis__meta {
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--encre-2);
+}
+
 .temoignage {
   display: grid;
   justify-items: center;
@@ -2062,7 +2191,8 @@ a {
     scroll-behavior: auto;
   }
   .hero__contenu > :not(.hero__sceau),
-  .visionneuse__image[data-entree] .visionneuse__img {
+  .visionneuse__image[data-entree] .visionneuse__img,
+  .lecteur__cadre {
     animation-name: fondu;
   }
   .sceau--trace {

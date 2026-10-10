@@ -37,7 +37,6 @@ photos:
   - src: ./photo-1.jpg
     chapitre: "Les préparatifs"   # Les préparatifs, La cérémonie, Les photos de couple, Le vin d'honneur, La soirée
     alt: "Ce qu'on voit sur la photo"
-temoignage: null
 ---
 ```
 
@@ -53,7 +52,7 @@ Le texte de chaque zone est dans `content/zones/<zone>.md` : `description` pour 
 
 - `lib/site.ts` : coordonnées, formules et prix (« à partir de »), mentions légales, mariage mis en avant sur l'accueil.
 - `content/films.json` : les teasers YouTube de l'accueil.
-- Un témoignage ne s'affiche que si `verifie: true`, une fois sa provenance confirmée (avis Google, message des mariés).
+- `content/avis.json` : les avis des mariés. Un avis ne s'affiche (accueil, et page du mariage si `mariage` est renseigné) que si `verifie: true`, une fois sa provenance confirmée par Hugo (avis Google, message des mariés) : publier un avis non vérifié comme venant d'un client est interdit (art. VI.100 du Code de droit économique).
 
 ## Logo
 

@@ -7,6 +7,7 @@ import { Logotype } from './Brand';
 import Reseaux from './Reseaux';
 
 const gauche = [
+  { href: '/', label: 'Accueil' },
   { href: '/mariages/', label: 'Mariages' },
   { href: '/#films', label: 'Films' },
 ];
@@ -51,7 +52,8 @@ export default function Header() {
 
   const solide = !transparent || defile || ouvert;
   const fermer = () => setOuvert(false);
-  const actif = (href: string) => (href === '/mariages/' && pathname.startsWith('/mariages') ? 'page' : undefined);
+  const actif = (href: string) =>
+    (href === '/' && pathname === '/') || (href === '/mariages/' && pathname.startsWith('/mariages')) ? 'page' : undefined;
 
   return (
     <>

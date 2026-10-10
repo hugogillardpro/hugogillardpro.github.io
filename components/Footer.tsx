@@ -20,6 +20,9 @@ export default function Footer() {
         <nav aria-label="Pied de page">
           <ul className="pied__liens">
             <li>
+              <Link href="/">Accueil</Link>
+            </li>
+            <li>
               <Link href="/mariages/">Mariages</Link>
             </li>
             <li>

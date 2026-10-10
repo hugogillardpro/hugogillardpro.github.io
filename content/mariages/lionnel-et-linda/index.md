@@ -63,10 +63,6 @@ photos:
   - src: ./lionnel-linda-gateau-etincelles.jpg
     chapitre: "La soirée"
     alt: "Lionnel et Linda devant les invités, à côté d'une pièce montée surmontée de fontaines d'étincelles"
-temoignage:
-  texte: "Hugo est une personne très discrète et professionnelle qui nous a également guidés dans des idées de photos. Grâce à lui, nous revivons les émotions de notre mariage à chaque visionnage de nos photos et notre vidéo de mariage."
-  verifie: false
-  source: null
 ---
 
 <!-- Indices relevés sur les photos pour aider à identifier les lieux (non publiés) :
