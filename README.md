@@ -66,4 +66,6 @@ Le monogramme, le sceau et le logotype sont dessinés à partir des contours de 
 
 Le workflow `.github/workflows/deploy.yml` construit et publie le site à chaque push sur `main`.
 
-Avant le premier déploiement : **Settings › Pages › Build and deployment › Source : GitHub Actions**. Le domaine `hugogillardpro.com` reste réglé dans Settings › Pages (le fichier `public/CNAME` est conservé).
+Réglage conseillé (réservé au propriétaire du dépôt) : **Settings › Pages › Build and deployment › Source : GitHub Actions**, et `hugogillardpro.com` dans **Custom domain**.
+
+Tant que la source reste « Deploy from a branch », GitHub publie aussi la racine de `main` à chaque envoi : le fichier `CNAME` à la racine lui donne le domaine (sans lui, hugogillardpro.com n'est plus servi), et le workflow attend la fin de cette publication pour mettre le site construit en ligne après elle. Ne pas supprimer ce fichier `CNAME` ni `public/CNAME`.

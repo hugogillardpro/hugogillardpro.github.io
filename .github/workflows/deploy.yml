@@ -43,9 +43,28 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+      actions: read
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      # Tant que la source de GitHub Pages est « depuis une branche » (réglage réservé au propriétaire du
+      # dépôt), GitHub publie aussi la racine de main à chaque envoi. On attend la fin de cette publication
+      # pour que le site construit passe après elle et reste en ligne. Sans publication automatique
+      # (source « GitHub Actions »), l'attente s'arrête d'elle-même au bout d'une minute.
+      - name: Attendre la publication automatique de GitHub
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          for i in $(seq 1 36); do
+            etat=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs?head_sha=$GITHUB_SHA" \
+              --jq '[.workflow_runs[] | select(.name == "pages build and deployment")][0].status // ""')
+            if [ "$etat" = "completed" ]; then echo "Publication automatique terminée."; break; fi
+            if [ -z "$etat" ] && [ "$i" -ge 6 ]; then echo "Pas de publication automatique."; break; fi
+            sleep 10
+          done
       - id: deployment
         uses: actions/deploy-pages@v5
