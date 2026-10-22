@@ -89,8 +89,9 @@ export const films: { id: string; couple: string; mariage: string | null }[] = f
 
 // Accueil : le mariage dont la grande photo ouvre la page, et les photos de la section « Mon approche ».
 export const accueil = {
-  // Vidéo d'ouverture (extrait du film de Laura & Alexis) et son affiche.
-  // srcVertical : la même vidéo recadrée en 9:16 (540 × 960, 2 Mo) pour les écrans en hauteur.
+  // Vidéo d'ouverture (le film de Laura & Alexis, 1920 × 1080, 10 Mo) et son affiche.
+  // srcVertical : la même vidéo recadrée au centre en 9:16 (1080 × 1920, 7 Mo) pour les écrans en hauteur.
+  // Pour les refaire : voir « Vidéo d'ouverture » dans le README.
   video: {
     src: '/video/hero.mp4',
     srcVertical: '/video/hero-vertical.mp4',
