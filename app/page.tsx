@@ -64,7 +64,8 @@ export default function Accueil() {
           { '@type': 'Country', name: 'France' },
         ],
         founder: { '@id': `${site.url}/#hugo` },
-        sameAs: [site.instagram, site.facebook],
+        hasMap: site.google,
+        sameAs: [site.instagram, site.facebook, site.google],
       },
     ],
   };

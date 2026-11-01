@@ -19,6 +19,8 @@ export const site = {
   instagram: 'https://www.instagram.com/hugogillardpro',
   instagramNom: '@hugogillardpro',
   facebook: 'https://www.facebook.com/hugoglld',
+  // Fiche Google d'Hugo (profil d'établissement), ouverte dans Google Maps : avis, téléphone, zones.
+  google: 'https://maps.google.com/?cid=8450977257613030765',
   zones: 'Toute la Belgique et toute la France',
   delaiReponse: 'sous 48 heures',
   horaires: 'Sur rendez-vous',

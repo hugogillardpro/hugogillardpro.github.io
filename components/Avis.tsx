@@ -2,6 +2,7 @@ import Link from 'next/link';
 import Couple from './Couple';
 import { getAvis } from '@/lib/avis';
 import { dateMois, majuscule } from '@/lib/format';
+import { site } from '@/lib/site';
 
 // « Le mot des mariés » sur l'accueil : seulement les avis vérifiés. Sans avis vérifié, pas de section.
 export default function Avis() {
@@ -10,8 +11,11 @@ export default function Avis() {
   return (
     <section className="section avis" aria-labelledby="titre-avis">
       <div className="conteneur">
-        <div className="tete-section">
+        <div className="tete-section tete-section--ligne">
           <h2 id="titre-avis">Le mot des mariés</h2>
+          <a href={site.google} className="lien" rel="noopener">
+            Avis sur Google
+          </a>
         </div>
         <ul className="avis__liste" data-colonnes={avis.length % 3 === 0 ? 3 : 2}>
           {avis.map((a) => (
