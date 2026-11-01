@@ -1,6 +1,6 @@
 # hugogillardpro.com
 
-Site d'Hugo Gillard, photographe et vidéaste de mariage. Construit avec [Next.js](https://nextjs.org/docs) en export statique, publié sur GitHub Pages.
+Site d'Hugo Gillard, photographe et vidéaste de mariage. Construit avec [Next.js](https://nextjs.org/docs) en export statique, publié sur Vercel (voir « Mise en ligne »).
 
 ## Travailler en local
 
@@ -76,7 +76,15 @@ Le monogramme, le sceau et le logotype sont dessinés à partir des contours de 
 
 ## Mise en ligne
 
-Le workflow `.github/workflows/deploy.yml` construit et publie le site à chaque push sur `main`.
+### Vercel
+
+Le site est publié par Vercel (projet de l'équipe Adista relié à ce dépôt GitHub) : chaque push sur `main` part en production, chaque autre branche reçoit une adresse d'aperçu. `vercel.json` fixe les réglages pour qu'ils ne dépendent pas du tableau de bord : build `npm run build`, dossier `out/` servi tel quel, barre oblique finale ajoutée aux adresses comme sur GitHub Pages, cache long pour les fichiers de `/_next/static/` (leur nom change à chaque version).
+
+Vercel Web Analytics (onglet **Analytics** du projet) n'est chargé que dans le site construit par Vercel (`vercel` dans `lib/site.ts`), jamais dans l'aperçu ni sur GitHub Pages. Il ne dépose pas de cookie : il n'entre pas dans le bandeau de consentement, et la page Confidentialité le mentionne (avec Vercel comme hébergeur) dès que le site est construit par Vercel.
+
+### GitHub Pages, jusqu'au passage du domaine sur Vercel
+
+Le workflow `.github/workflows/deploy.yml` construit et publie le site à chaque push sur `main`. Il reste en place tant que les DNS de hugogillardpro.com pointent vers GitHub Pages. Une fois le domaine servi par Vercel : retirer le domaine et désactiver GitHub Pages (**Settings › Pages**, réservé au propriétaire), puis supprimer le workflow et les deux fichiers `CNAME`.
 
 Réglage conseillé (réservé au propriétaire du dépôt) : **Settings › Pages › Build and deployment › Source : GitHub Actions**, et `hugogillardpro.com` dans **Custom domain**.
 

@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import type { ReactNode } from 'react';
+import { Analytics } from '@vercel/analytics/next';
 import '@fontsource-variable/playfair-display';
 import '@fontsource-variable/playfair-display/wght-italic.css';
 import '@fontsource-variable/jost';
@@ -8,7 +9,7 @@ import Apparitions from '@/components/Apparitions';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Consent from '@/components/Consent';
-import { apercu, site } from '@/lib/site';
+import { apercu, site, vercel } from '@/lib/site';
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -42,6 +43,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <Footer />
         <Consent />
         <Apparitions />
+        {/* Mesure d'audience sans cookie : hors du bandeau de consentement (voir Confidentialité). */}
+        {vercel && !apercu && <Analytics />}
       </body>
     </html>
   );

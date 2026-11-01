@@ -4,6 +4,10 @@ import filmsJson from '@/content/films.json';
 // traceur Google Ads coupé et formulaire qui n'envoie rien. Le site publié n'est pas concerné.
 export const apercu = process.env.NEXT_PUBLIC_APERCU === '1';
 
+// Site construit par Vercel (Vercel pose VERCEL=1 pendant le build) : Vercel Web Analytics, dont le script
+// /_vercel/insights n'existe que là, et Vercel indiqué comme hébergeur. Lu au build : composants serveur seulement.
+export const vercel = process.env.VERCEL === '1';
+
 // Coordonnées et réglages communs à tout le site.
 export const site = {
   nom: 'Hugo Gillard',

@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { site } from '@/lib/site';
+import { site, vercel } from '@/lib/site';
 
 export const metadata: Metadata = {
   title: 'Confidentialité et cookies',
@@ -51,10 +51,23 @@ export default function Confidentialite() {
             confidentialité renforcée (youtube-nocookie.com).
           </p>
 
+          {vercel && (
+            <>
+              <h2>Mesure d'audience</h2>
+              <p>
+                Pour savoir combien de personnes visitent le site et quelles pages elles regardent, j'utilise Vercel Web
+                Analytics (intérêt légitime, article 6.1.f du RGPD). Il ne dépose aucun cookie et n'enregistre rien dans
+                votre navigateur : une visite est reconnue par une empreinte calculée à partir de la connexion, effacée au
+                bout de 24 heures, qui ne permet pas de vous suivre d'un jour à l'autre ni sur d'autres sites.
+              </p>
+            </>
+          )}
+
           <h2>Hébergement</h2>
           <p>
-            Le site est hébergé par GitHub Pages (GitHub, États-Unis), qui peut enregistrer l'adresse IP des visiteurs
-            dans ses journaux techniques. Les polices de caractères sont hébergées sur le site lui-même.
+            Le site est hébergé par {vercel ? 'Vercel (États-Unis)' : 'GitHub Pages (GitHub, États-Unis)'}, qui peut
+            enregistrer l'adresse IP des visiteurs dans ses journaux techniques. Les polices de caractères sont hébergées
+            sur le site lui-même.
           </p>
 
           <h2>Vos droits</h2>
