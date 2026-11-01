@@ -16,6 +16,8 @@ concurrency:
 
 jobs:
   build:
+    # Seulement dans le dépôt d'Hugo : sa copie sur le compte Adista9, reliée à Vercel, n'a pas de GitHub Pages.
+    if: github.repository == 'hugogillardpro/hugogillardpro.github.io'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
