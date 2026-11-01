@@ -17,7 +17,7 @@ import { accueil, films, site } from '@/lib/site';
 
 const titre = 'Hugo Gillard, photographe et vidéaste de mariage en Belgique';
 const description =
-  "Reportages photo et films de mariage dans toute la Belgique et toute la France. Environ 700 photos retouchées, un teaser et un film d'une dizaine de minutes. Découvrez des mariages complets, dans l'ordre de la journée.";
+  'Photographe et vidéaste de mariage en Belgique et en France : environ 700 photos retouchées, un teaser et un film. Découvrez des mariages complets.';
 
 export const metadata: Metadata = {
   title: { absolute: titre },
@@ -45,6 +45,25 @@ export default function Accueil() {
         url: `${site.url}/`,
         email: site.email,
         telephone: site.telephone,
+        sameAs: [site.instagram, site.facebook],
+      },
+      {
+        // Fiche d'entreprise lue par Google et les IA. Adresse reprise des mentions légales dès qu'elle est
+        // renseignée ; pas d'horaires tant qu'Hugo ne les a pas donnés.
+        '@type': 'LocalBusiness',
+        '@id': `${site.url}/#entreprise`,
+        name: site.legal.denomination ?? site.nom,
+        description: `${site.metier}. ${site.zones}.`,
+        url: `${site.url}/`,
+        image: `${site.url}/img/${accueil.mariageEnUne}/og.jpg`,
+        email: site.email,
+        telephone: site.telephone,
+        address: site.legal.adresse ?? undefined,
+        areaServed: [
+          { '@type': 'Country', name: 'Belgique' },
+          { '@type': 'Country', name: 'France' },
+        ],
+        founder: { '@id': `${site.url}/#hugo` },
         sameAs: [site.instagram, site.facebook],
       },
     ],

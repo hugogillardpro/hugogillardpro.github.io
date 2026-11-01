@@ -17,7 +17,8 @@ const schema = z.object({
   // Nom administratif, pour les données structurées.
   officiel: z.string(),
   ordre: z.number(),
-  description: z.string().max(170),
+  // Google coupe la description au-delà de 160 caractères.
+  description: z.string().max(160),
   intro: z.string(),
 });
 
