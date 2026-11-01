@@ -49,11 +49,11 @@ export default function Accueil() {
       },
       {
         // Fiche d'entreprise lue par Google et les IA. Adresse reprise des mentions légales dès qu'elle est
-        // renseignée ; pas d'horaires tant qu'Hugo ne les a pas donnés.
+        // renseignée. « Sur rendez-vous » n'a pas d'équivalent dans openingHours : il figure dans la description.
         '@type': 'LocalBusiness',
         '@id': `${site.url}/#entreprise`,
         name: site.legal.denomination ?? site.nom,
-        description: `${site.metier}. ${site.zones}.`,
+        description: `${site.metier}. ${site.zones}. ${site.horaires}.`,
         url: `${site.url}/`,
         image: `${site.url}/img/${accueil.mariageEnUne}/og.jpg`,
         email: site.email,

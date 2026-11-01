@@ -42,6 +42,10 @@ export default function Contact() {
               <dt>Zones</dt>
               <dd>{site.zones}, ailleurs sur demande</dd>
             </div>
+            <div>
+              <dt>Horaires</dt>
+              <dd>{site.horaires}</dd>
+            </div>
           </dl>
         </div>
         <div>
