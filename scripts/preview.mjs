@@ -1,4 +1,4 @@
-// Petit serveur local pour vérifier le dossier out/ tel que GitHub Pages le servira
+// Petit serveur local pour vérifier le dossier out/ tel que Vercel le servira
 // (dossiers avec index.html, redirection vers la barre oblique finale, page 404).
 import fs from 'node:fs';
 import http from 'node:http';

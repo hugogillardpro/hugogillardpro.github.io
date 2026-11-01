@@ -44,7 +44,7 @@ export default function MentionsLegales() {
           </dl>
 
           <h2>Hébergement</h2>
-          <p>GitHub Pages, GitHub Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, États-Unis.</p>
+          <p>Vercel Inc., 440 N Barranca Avenue #4133, Covina, CA 91723, États-Unis.</p>
 
           <h2>Photos et films</h2>
           <p>

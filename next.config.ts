@@ -1,7 +1,7 @@
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  // Site entièrement statique, publié sur GitHub Pages.
+  // Site entièrement statique, publié sur Vercel.
   output: 'export',
   trailingSlash: true,
   // Pas de basePath : domaine personnalisé servi à la racine.

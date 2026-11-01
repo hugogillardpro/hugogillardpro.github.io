@@ -8,7 +8,7 @@ Site d'Hugo Gillard, photographe et vidéaste de mariage. Construit avec [Next.j
 npm install
 npm run dev       # http://localhost:3000
 npm run build     # génère le site dans out/
-npm run preview   # sert out/ sur http://localhost:4323 comme GitHub Pages le ferait
+npm run preview   # sert out/ sur http://localhost:4323 comme Vercel le ferait
 ```
 
 Node 22.12 ou plus récent. Si le port 3000 est déjà pris (par exemple par un autre projet Next.js), `npm run dev` choisit un autre port : utilisez l'adresse indiquée sur la ligne « Local: » du terminal. Le script `scripts/images.mjs` (lancé automatiquement par `dev` et `build`) crée les variantes WebP de toutes les photos dans `public/img/`, qui n'est pas versionné.
@@ -78,14 +78,14 @@ Le monogramme, le sceau et le logotype sont dessinés à partir des contours de 
 
 ### Vercel
 
-Le site est publié par Vercel (projet de l'équipe Adista relié à ce dépôt GitHub) : chaque push sur `main` part en production, chaque autre branche reçoit une adresse d'aperçu. `vercel.json` fixe les réglages pour qu'ils ne dépendent pas du tableau de bord : build `npm run build`, dossier `out/` servi tel quel, barre oblique finale ajoutée aux adresses comme sur GitHub Pages, cache long pour les fichiers de `/_next/static/` (leur nom change à chaque version).
+Le site est publié par Vercel (projet de l'équipe Adista relié à ce dépôt GitHub) : chaque push sur `main` part en production, chaque autre branche reçoit une adresse d'aperçu. `vercel.json` fixe les réglages pour qu'ils ne dépendent pas du tableau de bord : build `npm run build`, dossier `out/` servi tel quel, barre oblique finale ajoutée aux adresses, cache long pour les fichiers de `/_next/static/` (leur nom change à chaque version).
 
-Vercel Web Analytics (onglet **Analytics** du projet) n'est chargé que dans le site construit par Vercel (`vercel` dans `lib/site.ts`), jamais dans l'aperçu ni sur GitHub Pages. Il ne dépose pas de cookie : il n'entre pas dans le bandeau de consentement, et la page Confidentialité le mentionne (avec Vercel comme hébergeur) dès que le site est construit par Vercel.
+Vercel Web Analytics (onglet **Analytics** du projet) n'est chargé que dans le site construit par Vercel (`vercel` dans `lib/site.ts`), jamais dans l'aperçu local. Il ne dépose pas de cookie : il n'entre pas dans le bandeau de consentement, et la page Confidentialité le mentionne dès que le site est construit par Vercel.
 
-### GitHub Pages, jusqu'au passage du domaine sur Vercel
+### Nom de domaine
 
-Le workflow `.github/workflows/deploy.yml` construit et publie le site à chaque push sur `main`. Il reste en place tant que les DNS de hugogillardpro.com pointent vers GitHub Pages. Une fois le domaine servi par Vercel : retirer le domaine et désactiver GitHub Pages (**Settings › Pages**, réservé au propriétaire), puis supprimer le workflow et les deux fichiers `CNAME`.
+hugogillardpro.com est enregistré chez Namecheap, qui garde les DNS : un enregistrement A pour `@` et un CNAME pour `www`, avec les valeurs indiquées par Vercel (**Settings › Domains**), qui redirige `www` vers `hugogillardpro.com` et fournit le certificat HTTPS. Ne pas toucher aux enregistrements MX et TXT : ils servent à la messagerie (Namecheap Private Email).
 
-Réglage conseillé (réservé au propriétaire du dépôt) : **Settings › Pages › Build and deployment › Source : GitHub Actions**, et `hugogillardpro.com` dans **Custom domain**.
+### Ancienne publication sur GitHub Pages
 
-Tant que la source reste « Deploy from a branch », GitHub publie aussi la racine de `main` à chaque envoi : le fichier `CNAME` à la racine lui donne le domaine (sans lui, hugogillardpro.com n'est plus servi), et le workflow attend la fin de cette publication pour mettre le site construit en ligne après elle. Ne pas supprimer ce fichier `CNAME` ni `public/CNAME`.
+Jusqu'au 1er novembre 2026, le site était publié par GitHub Pages depuis le dépôt d'Hugo. Le workflow de publication et les fichiers `CNAME` ont été retirés après le passage du domaine sur Vercel. Il reste au propriétaire du dépôt à retirer le domaine et à désactiver GitHub Pages (**Settings › Pages**) : la dernière version publiée redirige vers hugogillardpro.com en attendant.

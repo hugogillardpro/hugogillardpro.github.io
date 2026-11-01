@@ -1,6 +1,6 @@
 // Next.js 16 range les données de préchargement des pages dans des sous-dossiers
 // (mariages/__next.mariages/__PAGE__.txt) mais les demande à plat
-// (mariages/__next.mariages.__PAGE__.txt). Sans serveur Next (GitHub Pages, aperçu statique),
+// (mariages/__next.mariages.__PAGE__.txt). Sans serveur Next (Vercel en statique, aperçu local),
 // chaque préchargement finirait en 404 : on ajoute une copie à plat de chaque fichier.
 import fs from 'node:fs/promises';
 import path from 'node:path';

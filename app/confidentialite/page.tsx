@@ -65,7 +65,7 @@ export default function Confidentialite() {
 
           <h2>Hébergement</h2>
           <p>
-            Le site est hébergé par {vercel ? 'Vercel (États-Unis)' : 'GitHub Pages (GitHub, États-Unis)'}, qui peut
+            Le site est hébergé par Vercel (États-Unis), qui peut
             enregistrer l'adresse IP des visiteurs dans ses journaux techniques. Les polices de caractères sont hébergées
             sur le site lui-même.
           </p>
