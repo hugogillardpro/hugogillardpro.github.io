@@ -43,6 +43,12 @@ export default function Contact() {
               </dd>
             </div>
             <div>
+              <dt>Basé à</dt>
+              <dd>
+                {site.localite.ville}, dans le {site.localite.province}
+              </dd>
+            </div>
+            <div>
               <dt>Zones</dt>
               <dd>{site.zones}, ailleurs sur demande</dd>
             </div>

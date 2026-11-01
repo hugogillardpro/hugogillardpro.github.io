@@ -48,8 +48,8 @@ export default function Accueil() {
         sameAs: [site.instagram, site.facebook],
       },
       {
-        // Fiche d'entreprise lue par Google et les IA. Adresse reprise des mentions légales dès qu'elle est
-        // renseignée. « Sur rendez-vous » n'a pas d'équivalent dans openingHours : il figure dans la description.
+        // Fiche d'entreprise lue par Google et les IA : la commune seulement, comme sur la fiche Google.
+        // « Sur rendez-vous » n'a pas d'équivalent dans openingHours : il figure dans la description.
         '@type': 'LocalBusiness',
         '@id': `${site.url}/#entreprise`,
         name: site.legal.denomination ?? site.nom,
@@ -58,7 +58,13 @@ export default function Accueil() {
         image: `${site.url}/img/${accueil.mariageEnUne}/og.jpg`,
         email: site.email,
         telephone: site.telephone,
-        address: site.legal.adresse ?? undefined,
+        address: {
+          '@type': 'PostalAddress',
+          addressLocality: site.localite.ville,
+          postalCode: site.localite.codePostal,
+          addressRegion: site.localite.province,
+          addressCountry: site.localite.pays,
+        },
         areaServed: [
           { '@type': 'Country', name: 'Belgique' },
           { '@type': 'Country', name: 'France' },

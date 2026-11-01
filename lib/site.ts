@@ -22,6 +22,8 @@ export const site = {
   // Fiche Google d'Hugo (profil d'établissement), ouverte dans Google Maps : avis, téléphone, zones.
   google: 'https://maps.google.com/?cid=8450977257613030765',
   zones: 'Toute la Belgique et toute la France',
+  // Commune où Hugo est basé (sans adresse : il se déplace chez les mariés).
+  localite: { ville: 'Manage', codePostal: '7170', province: 'Hainaut', pays: 'BE' },
   delaiReponse: 'sous 48 heures',
   horaires: 'Sur rendez-vous',
   // Durée de conservation des demandes de contact (page Confidentialité) : à confirmer avec Hugo.
